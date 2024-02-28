@@ -8,7 +8,8 @@
 ### Austin Saylor, Kyle Remmenga, Kian Highland
 
 ## Abstract:
-    Object Oriented Programming is the concept of programming that is centered around data and objects, 
+
+Object Oriented Programming is the concept of programming that is centered around data and objects, 
 rather than functions and logic. For this project, we decided as a group to create a game, which will be coded 
 using Object-Oriented Design. The goal for this project is to gain a better understanding of Object-Oriented Design, 
 and how it can be used to create various types of programs. With this project, we also seek to learn more about how 
