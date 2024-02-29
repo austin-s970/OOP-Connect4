@@ -8,7 +8,7 @@
 ### Austin Saylor, Kyle Remmenga, Kian Highland
 
 ## Abstract:
-Exploring Object-Oriented Programming through Game Development: A Case Study on Connect 4 in Python
+### Exploring Object-Oriented Programming through Game Development: A Case Study on Connect 4 in Python
 
 This project focuses on leveraging Object-Oriented Programming (OOP) principles to develop a game, 
 specifically Connect 4, in Python. OOP emphasizes organizing code around data and objects rather than procedural logic.
