@@ -40,10 +40,14 @@ class Spot:
         else:
             raise FullError('Piece already in this spot')
 
+    def is_player(self, player_number: int) -> None:
+        return (self._piece is not None and
+                self._piece.player_number == player_number)
+
 
 class Board:
     """Class describing the game board"""
     _board: list[list[Piece]]
 
-    def __init__(self, width: int, height: int) -> None:
-        self._board = [[Piece()] * width] * height
+    def __init__(self, width: int = 8, height: int = 8) -> None:
+        self._board = [[Spot()] * width] * height
