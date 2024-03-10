@@ -1,3 +1,5 @@
+SHELL = /bin/bash
+
 src = src/
 test_dir = test/
 documentation_dir = docs/
@@ -13,7 +15,7 @@ all: check-style check-type run-test clean docs
 
 .PHONY: check-type
 check-type:
-	$(TYPE_CHECK) $(src)
+	time $(TYPE_CHECK) $(src)
 
 .PHONY: check-style
 check-style:
@@ -29,7 +31,7 @@ test: run-test
 # discover and run all tests
 .PHONY: run-test
 run-test:
-	$(TEST) $(TEST_ARGS) $(test_dir)
+	time $(TEST) $(TEST_ARGS) $(test_dir)
 
 .PHONY: docs
 docs: $(documentation_dir)/index.html
