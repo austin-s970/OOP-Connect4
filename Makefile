@@ -1,5 +1,6 @@
 src = src/
 test_dir = test/
+documentation_dir = docs/
 
 TEST = PYTHONPATH=$(src) python3 -m pytest
 TEST_ARGS = -s --verbose --color=yes --cov=$(src)
@@ -8,7 +9,7 @@ STYLE_CHECK = flake8
 
 
 .PHONY: all
-all: check-style check-type run-test clean
+all: check-style check-type run-test clean docs
 
 .PHONY: check-type
 check-type:
@@ -29,6 +30,14 @@ test: run-test
 .PHONY: run-test
 run-test:
 	$(TEST) $(TEST_ARGS) $(test_dir)
+
+.PHONY: docs
+docs: $(documentation_dir)/index.html
+
+$(documentation_dir)/index.html: src/*.py
+	pdoc -o docs $^
+
+
 
 
 .PHONY: clean
