@@ -23,14 +23,14 @@ class Piece:
 
 class Spot:
     """Class describing a spot in a game board that can hold a piece"""
-    _piece = Optional[Piece]
+    _piece: Optional[Piece]
 
     def __init__(self) -> None:
         """Initialize the spot class"""
         self._piece = None
 
     @property
-    def piece(self) -> Piece:
+    def piece(self) -> Optional[Piece]:
         """The piece contained in this spot"""
         return self._piece
 
@@ -40,14 +40,14 @@ class Spot:
         else:
             raise FullError('Piece already in this spot')
 
-    def is_player(self, player_number: int) -> None:
-        return (self._piece is not None and
+    def is_player(self, player_number: int) -> bool:
+        return (isinstance(self._piece, Piece) and
                 self._piece.player_number == player_number)
 
 
 class Board:
     """Class describing the game board"""
-    _board: list[list[Piece]]
+    _board: list[list[Spot]]
 
     def __init__(self, width: int = 8, height: int = 8) -> None:
         self._board = [[Spot()] * width] * height
