@@ -1,10 +1,14 @@
-TEST = python -m pytest
-TEST_ARGS = -s --verbose --color=yes
+src = src/
+test_dir = test/
+
+TEST = PYTHONPATH=$(src) python3 -m pytest
+TEST_ARGS = -s --verbose --color=yes --cov=$(src)
 TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports
 STYLE_CHECK = flake8
 
+
 .PHONY: all
-all: check-style fix-style check-type run-test clean
+all: check-style check-type run-test clean
 
 .PHONY: check-type
 check-type:
@@ -16,12 +20,15 @@ check-style:
 
 .PHONY: fix-style
 fix-style:
-	autopep8 --in-place --recursive --aggressive --aggressive assignments/A0-sorttwonumbers
+	autopep8 --in-place --recursive --aggressive --aggressive $(src)
+
+.PHONY: test # alias for run-test
+test: run-test
 
 # discover and run all tests
 .PHONY: run-test
 run-test:
-	$(TEST) $(TEST_ARGS) assignments/A0-sorttwonumbers/tests/test.py
+	$(TEST) $(TEST_ARGS) $(test_dir)
 
 
 .PHONY: clean
