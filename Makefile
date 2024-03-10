@@ -12,11 +12,11 @@ all: check-style check-type run-test clean
 
 .PHONY: check-type
 check-type:
-	$(TYPE_CHECK) .
+	$(TYPE_CHECK) $(src)
 
 .PHONY: check-style
 check-style:
-	$(STYLE_CHECK) .
+	$(STYLE_CHECK) $(src)
 
 .PHONY: fix-style
 fix-style:
