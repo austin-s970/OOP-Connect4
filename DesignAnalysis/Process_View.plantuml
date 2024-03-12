@@ -1,0 +1,24 @@
+@startuml
+scale 2
+title "Process View"
+start
+
+if (Start Game?) then (yes)
+  :Start Game;
+
+  repeat
+    repeat
+      :Switch Player;
+      :Play Turn;
+    repeat while (Victory?) is (no)
+    ->yes;
+  repeat while (Play Again?) is (yes)
+  ->no;
+else (no)
+  :Quit;
+  stop
+
+endif
+
+stop
+@enduml
