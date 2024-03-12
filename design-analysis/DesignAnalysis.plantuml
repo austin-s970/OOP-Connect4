@@ -1,0 +1,31 @@
+@startuml
+scale 2
+title "Design Analysis"
+class Logical_View {
+}
+
+class Process_View {
+    +Start Game?
+    +StartGame()
+    +SwitchPlayer()
+    +PlayTurn()
+    +Victory?
+    +Play Again?
+    +Quit()
+}
+
+class Process_View {
+}
+
+class Development_View {
+}
+
+class Physical_View {
+}
+
+Context_View <-- Logical_View
+Context_View <-- Process_View
+Context_View <-- Development_View
+Context_View <-- Physical_View
+
+@enduml
