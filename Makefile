@@ -1,27 +1,45 @@
-TEST = python -m pytest
-TEST_ARGS = -s --verbose --color=yes
+SHELL = /bin/bash
+
+src = src/
+test_dir = test/
+documentation_dir = docs/
+
+TEST = PYTHONPATH=$(src) python3 -m pytest
+TEST_ARGS = -s --verbose --color=yes --cov=$(src)
 TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports
 STYLE_CHECK = flake8
 
+
 .PHONY: all
-all: check-style fix-style check-type run-test clean
+all: check-style check-type run-test clean docs
 
 .PHONY: check-type
 check-type:
-	$(TYPE_CHECK) .
+	time $(TYPE_CHECK) $(src)
 
 .PHONY: check-style
 check-style:
-	$(STYLE_CHECK) .
+	$(STYLE_CHECK) $(src)
 
 .PHONY: fix-style
 fix-style:
-	autopep8 --in-place --recursive --aggressive --aggressive assignments/A0-sorttwonumbers
+	autopep8 --in-place --recursive --aggressive --aggressive $(src)
+
+.PHONY: test # alias for run-test
+test: run-test
 
 # discover and run all tests
 .PHONY: run-test
 run-test:
-	$(TEST) $(TEST_ARGS) assignments/A0-sorttwonumbers/tests/test.py
+	time $(TEST) $(TEST_ARGS) $(test_dir)
+
+.PHONY: docs
+docs: $(documentation_dir)/index.html
+
+$(documentation_dir)/index.html: src/*.py
+	pdoc -o docs $^
+
+
 
 
 .PHONY: clean
