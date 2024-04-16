@@ -34,6 +34,9 @@ class Spot:
         """The piece contained in this spot"""
         return self._piece
 
+    def is_empty(self) -> bool:
+        return self._piece is None
+
     def add_piece(self, player_number: int) -> None:
         if self._piece is None:
             self._piece = Piece(player_number)
@@ -49,7 +52,7 @@ class Board:
     """Class describing the game board"""
     _board: list[list[Spot]]
 
-    def __init__(self, width: int = 8, height: int = 8) -> None:
+    def __init__(self, width: int = 7, height: int = 6) -> None:
         self._board = [[Spot()] * width] * height
 
     def get_player_at_spot(self, x: int, y: int) -> int:
@@ -65,8 +68,41 @@ class Board:
         else:
             return relevant_piece.player_number
 
-    def add_piece(self, x: int, y: int) -> None:
-        pass
+    @property
+    def width(self) -> int:
+        return len(self._board[0])
 
-    def drop_piece(self, x: int) -> None:
-        pass
+    @property
+    def height(self) -> int:
+        return len(self._board)
+
+    def drop_piece(self, x: int, player_number: int) -> None:
+        if not (x >= 0 and x < self.width):
+            raise ValueError
+        for y in range(self.height):
+            if self._board[y][x].is_empty():
+                self._board[y][x].add_piece(player_number)
+                break
+        else:
+            raise FullError
+
+    def __str__(self) -> str:
+        return_val: str = ''
+        for y in range(self.height):
+            for x in range(self.width):
+                player_num = self.get_player_at_spot(x, y)
+                if player_num == 1:
+                    return_val += 'X'
+                elif player_num == 2:
+                    return_val += 'O'
+                else:
+                    return_val += ' '
+            return_val += '\n'
+
+    def winner() -> int:
+        """
+        Check if a player has one
+
+        If a player has one, return the player number, otherwise, return 0
+        """
+        return 0
