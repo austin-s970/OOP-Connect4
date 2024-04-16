@@ -8,6 +8,7 @@ def draw(board: Board) -> None:
     for x in range(8):
         for y in range(8):
             player_number = board.get_player_at_spot(x, y)
+            player_number
             # draw a circle of the correct color at the relavent location
 
 
@@ -17,4 +18,4 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    print(main())
+    main()

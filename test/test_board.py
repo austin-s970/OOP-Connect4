@@ -52,11 +52,11 @@ class TestBoard(unittest.TestCase):
 
     board: board.Board
 
-    @given(x=strategies.integers(0, 7), y=strategies.integers(0, 7))
+    @given(x=strategies.integers(0, 6), y=strategies.integers(0, 5))
     def test_init_empty(self, x, y) -> None:
         self.board = board.Board()
-        self.assertEqual(len(self.board._board), 8)
-        self.assertEqual(len(self.board._board[y]), 8)
+        self.assertEqual(len(self.board._board), 6)
+        self.assertEqual(len(self.board._board[y]), 7)
         self.assertIsInstance(self.board._board[y][x], board.Spot)
 
     @given(width=strategies.integers(1, 1000),
