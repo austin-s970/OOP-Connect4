@@ -1,6 +1,21 @@
 @startuml
 scale 2
-title "Development_View"
-class Development_View {
+title "Development View"
+
+package "typing" {
+    [Optional]
 }
+
+frame "Board Module" {
+    [Board Module] --> [typing] : uses
+    [Spot] --> [FullError] : uses
+    [Spot] --> [Piece] : uses
+    [Board] --> [Spot] : uses
+    [Game] --> [Board] : uses
+}
+
+frame "Main Module" {
+    [Main Module] --> [Board Module] : uses
+}
+
 @enduml
