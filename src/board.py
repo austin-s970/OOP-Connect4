@@ -51,3 +51,22 @@ class Board:
 
     def __init__(self, width: int = 8, height: int = 8) -> None:
         self._board = [[Spot()] * width] * height
+
+    def get_player_at_spot(self, x: int, y: int) -> int:
+        """
+        Get the player number of a piece in a spot
+
+        Get the player number of the piece in a specific spot on the board.
+        If there is no piece there, return None
+        """
+        relevant_piece: Optional[Piece] = list[y][x].piece
+        if relevant_piece in None:
+            return None
+        else:
+            return relevant_piece.player_number
+
+    def add_piece(self, x: int, y: int) -> None:
+        pass
+
+    def drop_piece(self, x: int) -> None:
+        pass
