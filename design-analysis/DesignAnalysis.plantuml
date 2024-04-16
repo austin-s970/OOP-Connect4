@@ -2,6 +2,10 @@
 scale 2
 title "Design Analysis"
 class Logical_View {
+    +Piece : class
+    +Spot : class
+    +Board : class
+    +Game : class
 }
 
 class Process_View {
@@ -14,10 +18,10 @@ class Process_View {
     +Quit()
 }
 
-class Process_View {
-}
-
 class Development_View {
+    +typing : package
+    +Board Module : module
+    +Main Module : module
 }
 
 class Physical_View {
