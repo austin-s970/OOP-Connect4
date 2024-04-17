@@ -19,14 +19,13 @@ class Interface():
         """
         function to print the welcome message for the game
         """
-        pass
+        print("Welcome to Connect Four! Players will alternate turns by entering a column number (1-7).")
 
     def _print_turn_instructions(self) -> None:
         """
         function to print the turn instructions for the players
         """
-        print(f"""Its Player {self._player_turn}'s turn!
-              Please enter the column number to drop a piece.""")
+        print(f"""Its Player {self._player_turn}'s turn!\nPlease enter the column number to drop a piece.""")
 
     def _switch_player(self) -> None:
         """
@@ -68,7 +67,7 @@ class Interface():
         """
         function to print the message if a player wins
         """
-        pass
+        print(f"Congratulations Player {self._player_turn}! You have won the game!")
 
     def game_loop(self) -> None:
         """
@@ -91,3 +90,4 @@ class Interface():
                 break
             else:
                 self._switch_player()
+            print(self.board)

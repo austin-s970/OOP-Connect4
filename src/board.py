@@ -59,7 +59,7 @@ class Board:
     _board: list[list[Spot]]
 
     def __init__(self, width: int = 7, height: int = 6) -> None:
-        self._board = [[Spot()] * width] * height
+        self._board = [[Spot() for _ in range(width)] for _ in range(height)]
 
     def get_player_at_spot(self, x: int, y: int) -> int:
         """
@@ -83,26 +83,28 @@ class Board:
         return len(self._board)
 
     def drop_piece(self, x: int, player_number: int) -> None:
-        if not (x >= 0 and x < self.width):
-            raise ValueError
-        for y in range(self.height):
+        if not (0 <= x < self.width):
+            raise ValueError("Column number is out of bounds.")
+        # Start from the bottom of the column and move upwards
+        for y in (range(self.height)):
             if self._board[y][x].is_empty():
                 self._board[y][x].add_piece(player_number)
                 break
         else:
-            raise FullError
+            raise FullError("That column is already full!")
 
     def __str__(self) -> str:
         return_val: str = ''
-        for y in range(self.height):
+        # Reverse the range to print from the top to the bottom of the board
+        for y in reversed(range(self.height)):
             for x in range(self.width):
                 player_num = self.get_player_at_spot(x, y)
                 if player_num == 1:
-                    return_val += 'X'
+                    return_val += 'X '
                 elif player_num == 2:
-                    return_val += 'O'
+                    return_val += 'O '
                 else:
-                    return_val += ' '
+                    return_val += '□ '
             return_val += '\n'
         return return_val
 
