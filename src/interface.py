@@ -75,6 +75,7 @@ class Interface():
         function to run the game loop
         """
         column: int
+        print(self.board)
         while True:
             self._print_turn_instructions()
             while True:
@@ -86,6 +87,11 @@ class Interface():
                     print("Please enter a valid column on the game board.")
                 except FullError:
                     print("That column is already full!")
+                except EOFError:
+                    return
+                except KeyboardInterrupt:
+                    return
+            print(self.board)
             if (self.board.has_won(self._player_turn)):
                 self._print_winner_message()
                 break

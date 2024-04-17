@@ -59,7 +59,7 @@ class Board:
     _board: list[list[Spot]]
 
     def __init__(self, width: int = 7, height: int = 6) -> None:
-        self._board = [[Spot()] * width] * height
+        self._board = [[Spot() for i in range(width)] for j in range(height)]
 
     def get_player_at_spot(self, x: int, y: int) -> int:
         """
@@ -94,7 +94,7 @@ class Board:
 
     def __str__(self) -> str:
         return_val: str = ''
-        for y in range(self.height):
+        for y in range(self.height - 1, -1, -1):
             for x in range(self.width):
                 player_num = self.get_player_at_spot(x, y)
                 if player_num == 1:
@@ -104,6 +104,7 @@ class Board:
                 else:
                     return_val += ' '
             return_val += '\n'
+        return_val += ''.join([str(i + 1) for i in range(self.width)])
         return return_val
 
     def is_player(self, x: int, y: int, player_number: int) -> bool:
