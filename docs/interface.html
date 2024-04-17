@@ -153,22 +153,28 @@ interface    </h1>
 </span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a><span class="sd">        function to run the game loop</span>
 </span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a>        <span class="n">column</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_print_turn_instructions</span><span class="p">()</span>
-</span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a>            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a>                <span class="k">try</span><span class="p">:</span>
-</span><span id="L-82"><a href="#L-82"><span class="linenos">82</span></a>                    <span class="n">column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_input</span><span class="p">()</span>
-</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">drop_piece</span><span class="p">(</span><span class="n">column</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">)</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos">84</span></a>                    <span class="k">break</span>
-</span><span id="L-85"><a href="#L-85"><span class="linenos">85</span></a>                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span id="L-86"><a href="#L-86"><span class="linenos">86</span></a>                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter a valid column on the game board.&quot;</span><span class="p">)</span>
-</span><span id="L-87"><a href="#L-87"><span class="linenos">87</span></a>                <span class="k">except</span> <span class="n">FullError</span><span class="p">:</span>
-</span><span id="L-88"><a href="#L-88"><span class="linenos">88</span></a>                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;That column is already full!&quot;</span><span class="p">)</span>
-</span><span id="L-89"><a href="#L-89"><span class="linenos">89</span></a>            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">has_won</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">)):</span>
-</span><span id="L-90"><a href="#L-90"><span class="linenos">90</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_print_winner_message</span><span class="p">()</span>
-</span><span id="L-91"><a href="#L-91"><span class="linenos">91</span></a>                <span class="k">break</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos">92</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="L-93"><a href="#L-93"><span class="linenos">93</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_switch_player</span><span class="p">()</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a>        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_print_turn_instructions</span><span class="p">()</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a>            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos">82</span></a>                <span class="k">try</span><span class="p">:</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a>                    <span class="n">column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_input</span><span class="p">()</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos">84</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">drop_piece</span><span class="p">(</span><span class="n">column</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">)</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos">85</span></a>                    <span class="k">break</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos">86</span></a>                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos">87</span></a>                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter a valid column on the game board.&quot;</span><span class="p">)</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos">88</span></a>                <span class="k">except</span> <span class="n">FullError</span><span class="p">:</span>
+</span><span id="L-89"><a href="#L-89"><span class="linenos">89</span></a>                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;That column is already full!&quot;</span><span class="p">)</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos">90</span></a>                <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos">91</span></a>                    <span class="k">return</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos">92</span></a>                <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+</span><span id="L-93"><a href="#L-93"><span class="linenos">93</span></a>                    <span class="k">return</span>
+</span><span id="L-94"><a href="#L-94"><span class="linenos">94</span></a>            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos">95</span></a>            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">has_won</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">)):</span>
+</span><span id="L-96"><a href="#L-96"><span class="linenos">96</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_print_winner_message</span><span class="p">()</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos">97</span></a>                <span class="k">break</span>
+</span><span id="L-98"><a href="#L-98"><span class="linenos">98</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="L-99"><a href="#L-99"><span class="linenos">99</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_switch_player</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -184,92 +190,98 @@ interface    </h1>
 
     </div>
     <a class="headerlink" href="#Interface"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Interface-9"><a href="#Interface-9"><span class="linenos"> 9</span></a><span class="k">class</span> <span class="nc">Interface</span><span class="p">():</span>
-</span><span id="Interface-10"><a href="#Interface-10"><span class="linenos">10</span></a>
-</span><span id="Interface-11"><a href="#Interface-11"><span class="linenos">11</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Interface-12"><a href="#Interface-12"><span class="linenos">12</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Interface-13"><a href="#Interface-13"><span class="linenos">13</span></a><span class="sd">        constructor</span>
-</span><span id="Interface-14"><a href="#Interface-14"><span class="linenos">14</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Interface-15"><a href="#Interface-15"><span class="linenos">15</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span id="Interface-16"><a href="#Interface-16"><span class="linenos">16</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_turn_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="Interface-17"><a href="#Interface-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">:</span> <span class="n">Board</span> <span class="o">=</span> <span class="n">Board</span><span class="p">()</span>
-</span><span id="Interface-18"><a href="#Interface-18"><span class="linenos">18</span></a>
-</span><span id="Interface-19"><a href="#Interface-19"><span class="linenos">19</span></a>    <span class="k">def</span> <span class="nf">print_welcome</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Interface-20"><a href="#Interface-20"><span class="linenos">20</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Interface-21"><a href="#Interface-21"><span class="linenos">21</span></a><span class="sd">        function to print the welcome message for the game</span>
-</span><span id="Interface-22"><a href="#Interface-22"><span class="linenos">22</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Interface-23"><a href="#Interface-23"><span class="linenos">23</span></a>        <span class="k">pass</span>
-</span><span id="Interface-24"><a href="#Interface-24"><span class="linenos">24</span></a>
-</span><span id="Interface-25"><a href="#Interface-25"><span class="linenos">25</span></a>    <span class="k">def</span> <span class="nf">_print_turn_instructions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Interface-26"><a href="#Interface-26"><span class="linenos">26</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Interface-27"><a href="#Interface-27"><span class="linenos">27</span></a><span class="sd">        function to print the turn instructions for the players</span>
-</span><span id="Interface-28"><a href="#Interface-28"><span class="linenos">28</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Interface-29"><a href="#Interface-29"><span class="linenos">29</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;Its Player </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="si">}</span><span class="s2">&#39;s turn!</span>
-</span><span id="Interface-30"><a href="#Interface-30"><span class="linenos">30</span></a><span class="s2">              Please enter the column number to drop a piece.&quot;&quot;&quot;</span><span class="p">)</span>
-</span><span id="Interface-31"><a href="#Interface-31"><span class="linenos">31</span></a>
-</span><span id="Interface-32"><a href="#Interface-32"><span class="linenos">32</span></a>    <span class="k">def</span> <span class="nf">_switch_player</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Interface-33"><a href="#Interface-33"><span class="linenos">33</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Interface-34"><a href="#Interface-34"><span class="linenos">34</span></a><span class="sd">        function to switch the player turn</span>
-</span><span id="Interface-35"><a href="#Interface-35"><span class="linenos">35</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Interface-36"><a href="#Interface-36"><span class="linenos">36</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-</span><span id="Interface-37"><a href="#Interface-37"><span class="linenos">37</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span> <span class="o">=</span> <span class="mi">2</span>
-</span><span id="Interface-38"><a href="#Interface-38"><span class="linenos">38</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="Interface-39"><a href="#Interface-39"><span class="linenos">39</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span id="Interface-40"><a href="#Interface-40"><span class="linenos">40</span></a>
-</span><span id="Interface-41"><a href="#Interface-41"><span class="linenos">41</span></a>    <span class="nd">@property</span>
-</span><span id="Interface-42"><a href="#Interface-42"><span class="linenos">42</span></a>    <span class="k">def</span> <span class="nf">player_turn</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="Interface-43"><a href="#Interface-43"><span class="linenos">43</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Interface-44"><a href="#Interface-44"><span class="linenos">44</span></a><span class="sd">        getter property for the player_turn</span>
-</span><span id="Interface-45"><a href="#Interface-45"><span class="linenos">45</span></a>
-</span><span id="Interface-46"><a href="#Interface-46"><span class="linenos">46</span></a><span class="sd">        Returns:</span>
-</span><span id="Interface-47"><a href="#Interface-47"><span class="linenos">47</span></a><span class="sd">            int: the integer representing what player&#39;s turn it is</span>
-</span><span id="Interface-48"><a href="#Interface-48"><span class="linenos">48</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Interface-49"><a href="#Interface-49"><span class="linenos">49</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span>
-</span><span id="Interface-50"><a href="#Interface-50"><span class="linenos">50</span></a>
-</span><span id="Interface-51"><a href="#Interface-51"><span class="linenos">51</span></a>    <span class="k">def</span> <span class="nf">_read_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="Interface-52"><a href="#Interface-52"><span class="linenos">52</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Interface-53"><a href="#Interface-53"><span class="linenos">53</span></a><span class="sd">        function to read the input from the players</span>
-</span><span id="Interface-54"><a href="#Interface-54"><span class="linenos">54</span></a>
-</span><span id="Interface-55"><a href="#Interface-55"><span class="linenos">55</span></a><span class="sd">        Returns:</span>
-</span><span id="Interface-56"><a href="#Interface-56"><span class="linenos">56</span></a><span class="sd">            int: the column that the player specified</span>
-</span><span id="Interface-57"><a href="#Interface-57"><span class="linenos">57</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Interface-58"><a href="#Interface-58"><span class="linenos">58</span></a>        <span class="n">column</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="Interface-59"><a href="#Interface-59"><span class="linenos">59</span></a>        <span class="n">line</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
-</span><span id="Interface-60"><a href="#Interface-60"><span class="linenos">60</span></a>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="Interface-61"><a href="#Interface-61"><span class="linenos">61</span></a>            <span class="k">try</span><span class="p">:</span>
-</span><span id="Interface-62"><a href="#Interface-62"><span class="linenos">62</span></a>                <span class="n">column</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-</span><span id="Interface-63"><a href="#Interface-63"><span class="linenos">63</span></a>                <span class="k">break</span>
-</span><span id="Interface-64"><a href="#Interface-64"><span class="linenos">64</span></a>            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span id="Interface-65"><a href="#Interface-65"><span class="linenos">65</span></a>                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter a valid column number.&quot;</span><span class="p">)</span>
-</span><span id="Interface-66"><a href="#Interface-66"><span class="linenos">66</span></a>        <span class="k">return</span> <span class="n">column</span>
-</span><span id="Interface-67"><a href="#Interface-67"><span class="linenos">67</span></a>
-</span><span id="Interface-68"><a href="#Interface-68"><span class="linenos">68</span></a>    <span class="k">def</span> <span class="nf">_print_winner_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Interface-69"><a href="#Interface-69"><span class="linenos">69</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Interface-70"><a href="#Interface-70"><span class="linenos">70</span></a><span class="sd">        function to print the message if a player wins</span>
-</span><span id="Interface-71"><a href="#Interface-71"><span class="linenos">71</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Interface-72"><a href="#Interface-72"><span class="linenos">72</span></a>        <span class="k">pass</span>
-</span><span id="Interface-73"><a href="#Interface-73"><span class="linenos">73</span></a>
-</span><span id="Interface-74"><a href="#Interface-74"><span class="linenos">74</span></a>    <span class="k">def</span> <span class="nf">game_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Interface-75"><a href="#Interface-75"><span class="linenos">75</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Interface-76"><a href="#Interface-76"><span class="linenos">76</span></a><span class="sd">        function to run the game loop</span>
-</span><span id="Interface-77"><a href="#Interface-77"><span class="linenos">77</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Interface-78"><a href="#Interface-78"><span class="linenos">78</span></a>        <span class="n">column</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="Interface-79"><a href="#Interface-79"><span class="linenos">79</span></a>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="Interface-80"><a href="#Interface-80"><span class="linenos">80</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_print_turn_instructions</span><span class="p">()</span>
-</span><span id="Interface-81"><a href="#Interface-81"><span class="linenos">81</span></a>            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="Interface-82"><a href="#Interface-82"><span class="linenos">82</span></a>                <span class="k">try</span><span class="p">:</span>
-</span><span id="Interface-83"><a href="#Interface-83"><span class="linenos">83</span></a>                    <span class="n">column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_input</span><span class="p">()</span>
-</span><span id="Interface-84"><a href="#Interface-84"><span class="linenos">84</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">drop_piece</span><span class="p">(</span><span class="n">column</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">)</span>
-</span><span id="Interface-85"><a href="#Interface-85"><span class="linenos">85</span></a>                    <span class="k">break</span>
-</span><span id="Interface-86"><a href="#Interface-86"><span class="linenos">86</span></a>                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span id="Interface-87"><a href="#Interface-87"><span class="linenos">87</span></a>                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter a valid column on the game board.&quot;</span><span class="p">)</span>
-</span><span id="Interface-88"><a href="#Interface-88"><span class="linenos">88</span></a>                <span class="k">except</span> <span class="n">FullError</span><span class="p">:</span>
-</span><span id="Interface-89"><a href="#Interface-89"><span class="linenos">89</span></a>                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;That column is already full!&quot;</span><span class="p">)</span>
-</span><span id="Interface-90"><a href="#Interface-90"><span class="linenos">90</span></a>            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">has_won</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">)):</span>
-</span><span id="Interface-91"><a href="#Interface-91"><span class="linenos">91</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_print_winner_message</span><span class="p">()</span>
-</span><span id="Interface-92"><a href="#Interface-92"><span class="linenos">92</span></a>                <span class="k">break</span>
-</span><span id="Interface-93"><a href="#Interface-93"><span class="linenos">93</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Interface-94"><a href="#Interface-94"><span class="linenos">94</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_switch_player</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Interface-9"><a href="#Interface-9"><span class="linenos">  9</span></a><span class="k">class</span> <span class="nc">Interface</span><span class="p">():</span>
+</span><span id="Interface-10"><a href="#Interface-10"><span class="linenos"> 10</span></a>
+</span><span id="Interface-11"><a href="#Interface-11"><span class="linenos"> 11</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Interface-12"><a href="#Interface-12"><span class="linenos"> 12</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="Interface-13"><a href="#Interface-13"><span class="linenos"> 13</span></a><span class="sd">        constructor</span>
+</span><span id="Interface-14"><a href="#Interface-14"><span class="linenos"> 14</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Interface-15"><a href="#Interface-15"><span class="linenos"> 15</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="Interface-16"><a href="#Interface-16"><span class="linenos"> 16</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_turn_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="Interface-17"><a href="#Interface-17"><span class="linenos"> 17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">:</span> <span class="n">Board</span> <span class="o">=</span> <span class="n">Board</span><span class="p">()</span>
+</span><span id="Interface-18"><a href="#Interface-18"><span class="linenos"> 18</span></a>
+</span><span id="Interface-19"><a href="#Interface-19"><span class="linenos"> 19</span></a>    <span class="k">def</span> <span class="nf">print_welcome</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Interface-20"><a href="#Interface-20"><span class="linenos"> 20</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="Interface-21"><a href="#Interface-21"><span class="linenos"> 21</span></a><span class="sd">        function to print the welcome message for the game</span>
+</span><span id="Interface-22"><a href="#Interface-22"><span class="linenos"> 22</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Interface-23"><a href="#Interface-23"><span class="linenos"> 23</span></a>        <span class="k">pass</span>
+</span><span id="Interface-24"><a href="#Interface-24"><span class="linenos"> 24</span></a>
+</span><span id="Interface-25"><a href="#Interface-25"><span class="linenos"> 25</span></a>    <span class="k">def</span> <span class="nf">_print_turn_instructions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Interface-26"><a href="#Interface-26"><span class="linenos"> 26</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="Interface-27"><a href="#Interface-27"><span class="linenos"> 27</span></a><span class="sd">        function to print the turn instructions for the players</span>
+</span><span id="Interface-28"><a href="#Interface-28"><span class="linenos"> 28</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Interface-29"><a href="#Interface-29"><span class="linenos"> 29</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;Its Player </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="si">}</span><span class="s2">&#39;s turn!</span>
+</span><span id="Interface-30"><a href="#Interface-30"><span class="linenos"> 30</span></a><span class="s2">              Please enter the column number to drop a piece.&quot;&quot;&quot;</span><span class="p">)</span>
+</span><span id="Interface-31"><a href="#Interface-31"><span class="linenos"> 31</span></a>
+</span><span id="Interface-32"><a href="#Interface-32"><span class="linenos"> 32</span></a>    <span class="k">def</span> <span class="nf">_switch_player</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Interface-33"><a href="#Interface-33"><span class="linenos"> 33</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="Interface-34"><a href="#Interface-34"><span class="linenos"> 34</span></a><span class="sd">        function to switch the player turn</span>
+</span><span id="Interface-35"><a href="#Interface-35"><span class="linenos"> 35</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Interface-36"><a href="#Interface-36"><span class="linenos"> 36</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="Interface-37"><a href="#Interface-37"><span class="linenos"> 37</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span id="Interface-38"><a href="#Interface-38"><span class="linenos"> 38</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="Interface-39"><a href="#Interface-39"><span class="linenos"> 39</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="Interface-40"><a href="#Interface-40"><span class="linenos"> 40</span></a>
+</span><span id="Interface-41"><a href="#Interface-41"><span class="linenos"> 41</span></a>    <span class="nd">@property</span>
+</span><span id="Interface-42"><a href="#Interface-42"><span class="linenos"> 42</span></a>    <span class="k">def</span> <span class="nf">player_turn</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="Interface-43"><a href="#Interface-43"><span class="linenos"> 43</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="Interface-44"><a href="#Interface-44"><span class="linenos"> 44</span></a><span class="sd">        getter property for the player_turn</span>
+</span><span id="Interface-45"><a href="#Interface-45"><span class="linenos"> 45</span></a>
+</span><span id="Interface-46"><a href="#Interface-46"><span class="linenos"> 46</span></a><span class="sd">        Returns:</span>
+</span><span id="Interface-47"><a href="#Interface-47"><span class="linenos"> 47</span></a><span class="sd">            int: the integer representing what player&#39;s turn it is</span>
+</span><span id="Interface-48"><a href="#Interface-48"><span class="linenos"> 48</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Interface-49"><a href="#Interface-49"><span class="linenos"> 49</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span>
+</span><span id="Interface-50"><a href="#Interface-50"><span class="linenos"> 50</span></a>
+</span><span id="Interface-51"><a href="#Interface-51"><span class="linenos"> 51</span></a>    <span class="k">def</span> <span class="nf">_read_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="Interface-52"><a href="#Interface-52"><span class="linenos"> 52</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="Interface-53"><a href="#Interface-53"><span class="linenos"> 53</span></a><span class="sd">        function to read the input from the players</span>
+</span><span id="Interface-54"><a href="#Interface-54"><span class="linenos"> 54</span></a>
+</span><span id="Interface-55"><a href="#Interface-55"><span class="linenos"> 55</span></a><span class="sd">        Returns:</span>
+</span><span id="Interface-56"><a href="#Interface-56"><span class="linenos"> 56</span></a><span class="sd">            int: the column that the player specified</span>
+</span><span id="Interface-57"><a href="#Interface-57"><span class="linenos"> 57</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Interface-58"><a href="#Interface-58"><span class="linenos"> 58</span></a>        <span class="n">column</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="Interface-59"><a href="#Interface-59"><span class="linenos"> 59</span></a>        <span class="n">line</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+</span><span id="Interface-60"><a href="#Interface-60"><span class="linenos"> 60</span></a>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="Interface-61"><a href="#Interface-61"><span class="linenos"> 61</span></a>            <span class="k">try</span><span class="p">:</span>
+</span><span id="Interface-62"><a href="#Interface-62"><span class="linenos"> 62</span></a>                <span class="n">column</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</span><span id="Interface-63"><a href="#Interface-63"><span class="linenos"> 63</span></a>                <span class="k">break</span>
+</span><span id="Interface-64"><a href="#Interface-64"><span class="linenos"> 64</span></a>            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span><span id="Interface-65"><a href="#Interface-65"><span class="linenos"> 65</span></a>                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter a valid column number.&quot;</span><span class="p">)</span>
+</span><span id="Interface-66"><a href="#Interface-66"><span class="linenos"> 66</span></a>        <span class="k">return</span> <span class="n">column</span>
+</span><span id="Interface-67"><a href="#Interface-67"><span class="linenos"> 67</span></a>
+</span><span id="Interface-68"><a href="#Interface-68"><span class="linenos"> 68</span></a>    <span class="k">def</span> <span class="nf">_print_winner_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Interface-69"><a href="#Interface-69"><span class="linenos"> 69</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="Interface-70"><a href="#Interface-70"><span class="linenos"> 70</span></a><span class="sd">        function to print the message if a player wins</span>
+</span><span id="Interface-71"><a href="#Interface-71"><span class="linenos"> 71</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Interface-72"><a href="#Interface-72"><span class="linenos"> 72</span></a>        <span class="k">pass</span>
+</span><span id="Interface-73"><a href="#Interface-73"><span class="linenos"> 73</span></a>
+</span><span id="Interface-74"><a href="#Interface-74"><span class="linenos"> 74</span></a>    <span class="k">def</span> <span class="nf">game_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Interface-75"><a href="#Interface-75"><span class="linenos"> 75</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="Interface-76"><a href="#Interface-76"><span class="linenos"> 76</span></a><span class="sd">        function to run the game loop</span>
+</span><span id="Interface-77"><a href="#Interface-77"><span class="linenos"> 77</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Interface-78"><a href="#Interface-78"><span class="linenos"> 78</span></a>        <span class="n">column</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="Interface-79"><a href="#Interface-79"><span class="linenos"> 79</span></a>        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+</span><span id="Interface-80"><a href="#Interface-80"><span class="linenos"> 80</span></a>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="Interface-81"><a href="#Interface-81"><span class="linenos"> 81</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_print_turn_instructions</span><span class="p">()</span>
+</span><span id="Interface-82"><a href="#Interface-82"><span class="linenos"> 82</span></a>            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="Interface-83"><a href="#Interface-83"><span class="linenos"> 83</span></a>                <span class="k">try</span><span class="p">:</span>
+</span><span id="Interface-84"><a href="#Interface-84"><span class="linenos"> 84</span></a>                    <span class="n">column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_input</span><span class="p">()</span>
+</span><span id="Interface-85"><a href="#Interface-85"><span class="linenos"> 85</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">drop_piece</span><span class="p">(</span><span class="n">column</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">)</span>
+</span><span id="Interface-86"><a href="#Interface-86"><span class="linenos"> 86</span></a>                    <span class="k">break</span>
+</span><span id="Interface-87"><a href="#Interface-87"><span class="linenos"> 87</span></a>                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span><span id="Interface-88"><a href="#Interface-88"><span class="linenos"> 88</span></a>                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter a valid column on the game board.&quot;</span><span class="p">)</span>
+</span><span id="Interface-89"><a href="#Interface-89"><span class="linenos"> 89</span></a>                <span class="k">except</span> <span class="n">FullError</span><span class="p">:</span>
+</span><span id="Interface-90"><a href="#Interface-90"><span class="linenos"> 90</span></a>                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;That column is already full!&quot;</span><span class="p">)</span>
+</span><span id="Interface-91"><a href="#Interface-91"><span class="linenos"> 91</span></a>                <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+</span><span id="Interface-92"><a href="#Interface-92"><span class="linenos"> 92</span></a>                    <span class="k">return</span>
+</span><span id="Interface-93"><a href="#Interface-93"><span class="linenos"> 93</span></a>                <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+</span><span id="Interface-94"><a href="#Interface-94"><span class="linenos"> 94</span></a>                    <span class="k">return</span>
+</span><span id="Interface-95"><a href="#Interface-95"><span class="linenos"> 95</span></a>            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+</span><span id="Interface-96"><a href="#Interface-96"><span class="linenos"> 96</span></a>            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">has_won</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">)):</span>
+</span><span id="Interface-97"><a href="#Interface-97"><span class="linenos"> 97</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_print_winner_message</span><span class="p">()</span>
+</span><span id="Interface-98"><a href="#Interface-98"><span class="linenos"> 98</span></a>                <span class="k">break</span>
+</span><span id="Interface-99"><a href="#Interface-99"><span class="linenos"> 99</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Interface-100"><a href="#Interface-100"><span class="linenos">100</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_switch_player</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -375,27 +387,33 @@ interface    </h1>
 
     </div>
     <a class="headerlink" href="#Interface.game_loop"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Interface.game_loop-74"><a href="#Interface.game_loop-74"><span class="linenos">74</span></a>    <span class="k">def</span> <span class="nf">game_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Interface.game_loop-75"><a href="#Interface.game_loop-75"><span class="linenos">75</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Interface.game_loop-76"><a href="#Interface.game_loop-76"><span class="linenos">76</span></a><span class="sd">        function to run the game loop</span>
-</span><span id="Interface.game_loop-77"><a href="#Interface.game_loop-77"><span class="linenos">77</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Interface.game_loop-78"><a href="#Interface.game_loop-78"><span class="linenos">78</span></a>        <span class="n">column</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="Interface.game_loop-79"><a href="#Interface.game_loop-79"><span class="linenos">79</span></a>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="Interface.game_loop-80"><a href="#Interface.game_loop-80"><span class="linenos">80</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_print_turn_instructions</span><span class="p">()</span>
-</span><span id="Interface.game_loop-81"><a href="#Interface.game_loop-81"><span class="linenos">81</span></a>            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="Interface.game_loop-82"><a href="#Interface.game_loop-82"><span class="linenos">82</span></a>                <span class="k">try</span><span class="p">:</span>
-</span><span id="Interface.game_loop-83"><a href="#Interface.game_loop-83"><span class="linenos">83</span></a>                    <span class="n">column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_input</span><span class="p">()</span>
-</span><span id="Interface.game_loop-84"><a href="#Interface.game_loop-84"><span class="linenos">84</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">drop_piece</span><span class="p">(</span><span class="n">column</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">)</span>
-</span><span id="Interface.game_loop-85"><a href="#Interface.game_loop-85"><span class="linenos">85</span></a>                    <span class="k">break</span>
-</span><span id="Interface.game_loop-86"><a href="#Interface.game_loop-86"><span class="linenos">86</span></a>                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span id="Interface.game_loop-87"><a href="#Interface.game_loop-87"><span class="linenos">87</span></a>                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter a valid column on the game board.&quot;</span><span class="p">)</span>
-</span><span id="Interface.game_loop-88"><a href="#Interface.game_loop-88"><span class="linenos">88</span></a>                <span class="k">except</span> <span class="n">FullError</span><span class="p">:</span>
-</span><span id="Interface.game_loop-89"><a href="#Interface.game_loop-89"><span class="linenos">89</span></a>                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;That column is already full!&quot;</span><span class="p">)</span>
-</span><span id="Interface.game_loop-90"><a href="#Interface.game_loop-90"><span class="linenos">90</span></a>            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">has_won</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">)):</span>
-</span><span id="Interface.game_loop-91"><a href="#Interface.game_loop-91"><span class="linenos">91</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_print_winner_message</span><span class="p">()</span>
-</span><span id="Interface.game_loop-92"><a href="#Interface.game_loop-92"><span class="linenos">92</span></a>                <span class="k">break</span>
-</span><span id="Interface.game_loop-93"><a href="#Interface.game_loop-93"><span class="linenos">93</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Interface.game_loop-94"><a href="#Interface.game_loop-94"><span class="linenos">94</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_switch_player</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Interface.game_loop-74"><a href="#Interface.game_loop-74"><span class="linenos"> 74</span></a>    <span class="k">def</span> <span class="nf">game_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Interface.game_loop-75"><a href="#Interface.game_loop-75"><span class="linenos"> 75</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="Interface.game_loop-76"><a href="#Interface.game_loop-76"><span class="linenos"> 76</span></a><span class="sd">        function to run the game loop</span>
+</span><span id="Interface.game_loop-77"><a href="#Interface.game_loop-77"><span class="linenos"> 77</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Interface.game_loop-78"><a href="#Interface.game_loop-78"><span class="linenos"> 78</span></a>        <span class="n">column</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="Interface.game_loop-79"><a href="#Interface.game_loop-79"><span class="linenos"> 79</span></a>        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+</span><span id="Interface.game_loop-80"><a href="#Interface.game_loop-80"><span class="linenos"> 80</span></a>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="Interface.game_loop-81"><a href="#Interface.game_loop-81"><span class="linenos"> 81</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_print_turn_instructions</span><span class="p">()</span>
+</span><span id="Interface.game_loop-82"><a href="#Interface.game_loop-82"><span class="linenos"> 82</span></a>            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="Interface.game_loop-83"><a href="#Interface.game_loop-83"><span class="linenos"> 83</span></a>                <span class="k">try</span><span class="p">:</span>
+</span><span id="Interface.game_loop-84"><a href="#Interface.game_loop-84"><span class="linenos"> 84</span></a>                    <span class="n">column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_input</span><span class="p">()</span>
+</span><span id="Interface.game_loop-85"><a href="#Interface.game_loop-85"><span class="linenos"> 85</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">drop_piece</span><span class="p">(</span><span class="n">column</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">)</span>
+</span><span id="Interface.game_loop-86"><a href="#Interface.game_loop-86"><span class="linenos"> 86</span></a>                    <span class="k">break</span>
+</span><span id="Interface.game_loop-87"><a href="#Interface.game_loop-87"><span class="linenos"> 87</span></a>                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span><span id="Interface.game_loop-88"><a href="#Interface.game_loop-88"><span class="linenos"> 88</span></a>                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter a valid column on the game board.&quot;</span><span class="p">)</span>
+</span><span id="Interface.game_loop-89"><a href="#Interface.game_loop-89"><span class="linenos"> 89</span></a>                <span class="k">except</span> <span class="n">FullError</span><span class="p">:</span>
+</span><span id="Interface.game_loop-90"><a href="#Interface.game_loop-90"><span class="linenos"> 90</span></a>                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;That column is already full!&quot;</span><span class="p">)</span>
+</span><span id="Interface.game_loop-91"><a href="#Interface.game_loop-91"><span class="linenos"> 91</span></a>                <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+</span><span id="Interface.game_loop-92"><a href="#Interface.game_loop-92"><span class="linenos"> 92</span></a>                    <span class="k">return</span>
+</span><span id="Interface.game_loop-93"><a href="#Interface.game_loop-93"><span class="linenos"> 93</span></a>                <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+</span><span id="Interface.game_loop-94"><a href="#Interface.game_loop-94"><span class="linenos"> 94</span></a>                    <span class="k">return</span>
+</span><span id="Interface.game_loop-95"><a href="#Interface.game_loop-95"><span class="linenos"> 95</span></a>            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+</span><span id="Interface.game_loop-96"><a href="#Interface.game_loop-96"><span class="linenos"> 96</span></a>            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">has_won</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_player_turn</span><span class="p">)):</span>
+</span><span id="Interface.game_loop-97"><a href="#Interface.game_loop-97"><span class="linenos"> 97</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_print_winner_message</span><span class="p">()</span>
+</span><span id="Interface.game_loop-98"><a href="#Interface.game_loop-98"><span class="linenos"> 98</span></a>                <span class="k">break</span>
+</span><span id="Interface.game_loop-99"><a href="#Interface.game_loop-99"><span class="linenos"> 99</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Interface.game_loop-100"><a href="#Interface.game_loop-100"><span class="linenos">100</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_switch_player</span><span class="p">()</span>
 </span></pre></div>
 
 
