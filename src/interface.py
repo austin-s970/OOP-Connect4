@@ -2,11 +2,15 @@
 Module to handle the input and player turns.
 """
 
+from typing import Optional
+
 import pygame
 import sys
 import math
+
 from graphics import Color, Draw
 from board import Screen, Board, FullError
+
 
 class Interface():
     def __init__(self) -> None:
@@ -77,10 +81,10 @@ class Interface():
         message = "Player " + str(player) + " wins!"
         if player == 1:
             label = font.render(message, 1, self.color.red)
-            self.screen.window.blit(label, (40,10))
+            self.screen.window.blit(label, (40, 10))
         else:
             label = font.render(message, 1, self.color.yellow)
-            self.screen.window.blit(label, (40,10))
+            self.screen.window.blit(label, (40, 10))
         print(message)
 
     def game_loop(self) -> None:
@@ -101,60 +105,11 @@ class Interface():
                     sys.exit()
 
                 if event.type == pygame.MOUSEMOTION and not wait_time:
-                    # If the mouse is moving, update the location of
-                    # the hovering piece
-                    screen.fill(self.color.black)
-                    self.draw.gameboard()
-                    posx = event.pos[0]
-                    if self._player_turn == 1:
-                        # If it's player 1's turn,
-                        # the circle will be red
-                        self.draw.draw_circle(self.color.red,
-                                              (posx,
-                                               self.draw.square_size/2))
-                    else:
-                        # If it's player 2's turn,
-                        # the circle will be yellow
-                        self.draw.draw_circle(self.color.yellow,
-                                              (posx,
-                                               self.draw.square_size/2))
+                    self.handle_mouse_motion(screen, event.pos)
                 pygame.display.update()
 
                 if event.type == pygame.MOUSEBUTTONDOWN and not wait_time:
-                    # If a player has placed a piece...
-
-                    # Clear the top of the screen
-                    pygame.draw.rect(self.screen.window,
-                                     self.color.black,
-                                     (0,0,self.screen.window_width,
-                                      self.screen.square_size))
-                    try:
-                        posx = event.pos[0]
-                        column = int(math.floor(posx/self.screen.square_size))
-                        # Drop a piece that matches the color of the player
-                        self.board.drop_piece(column, self._player_turn)
-                        print(self.board)
-                        
-                        # Update the state of the board
-                        self.draw.gameboard()
-                        pygame.display.update()
-
-                        if (self.board.has_won(self._player_turn)):
-                            # Check for the winning condition
-                            self._print_winner_message(self._player_turn)
-                            wait_time = pygame.time.get_ticks()
-                        else:
-                            self._switch_player()
-                        break
-                    except ValueError:
-                        print("Please enter a valid column on the game board.")
-                    except FullError:
-                        print("That column is already full!")
-                    except EOFError:
-                        return
-                    except KeyboardInterrupt:
-                        return
-
+                    wait_time = self.handle_mouse_click(event.pos)
             if wait_time:
                 # If the game has been won, check how long it's been
                 if pygame.time.get_ticks() - wait_time > 3000:
@@ -163,6 +118,60 @@ class Interface():
                 else:
                     pygame.display.update()
 
-            clock.tick(60) # Keep the game loop running smoothly
+            clock.tick(60)  # Keep the game loop running smoothly
 
-        pygame.quit() # End the game
+        pygame.quit()  # End the game
+
+    def handle_mouse_motion(self, screen: pygame.Surface,
+                            event_pos: list[int]) -> None:
+        # If the mouse is moving, update the location of
+        # the hovering piece
+        screen.fill(self.color.black)
+        self.draw.gameboard()
+        posx = event_pos[0]
+        if self._player_turn == 1:
+            # If it's player 1's turn,
+            # the circle will be red
+            self.draw.draw_circle(self.color.red,
+                                  (posx,
+                                   int(self.draw.square_size/2)))
+        else:
+            # If it's player 2's turn,
+            # the circle will be yellow
+            self.draw.draw_circle(self.color.yellow,
+                                  (posx,
+                                   int(self.draw.square_size/2)))
+
+    def handle_mouse_click(self, event_pos: list[float]) -> Optional[int]:
+        # If a player has placed a piece...
+
+        # Clear the top of the screen
+        pygame.draw.rect(self.screen.window,
+                         self.color.black,
+                         (0, 0, self.screen.window_width,
+                          self.screen.square_size))
+        try:
+            posx = event_pos[0]
+            column = int(math.floor(posx/self.screen.square_size))
+            # Drop a piece that matches the color of the player
+            self.board.drop_piece(column, self._player_turn)
+
+            # Update the state of the board
+            self.draw.gameboard()
+            pygame.display.update()
+
+            if (self.board.has_won(self._player_turn)):
+                # Check for the winning condition
+                self._print_winner_message(self._player_turn)
+                return pygame.time.get_ticks()
+            else:
+                self._switch_player()
+        except ValueError:
+            print("Please enter a valid column on the game board.")
+        except FullError:
+            print("That column is already full!")
+        except EOFError:
+            return None
+        except KeyboardInterrupt:
+            return None
+        return None

@@ -3,17 +3,19 @@ Module to manage the graphics.
 """
 
 import pygame
-from board import Screen, Board, Spot, Piece
+from board import Screen, Board, Spot
+
 
 class Color():
     def __init__(self) -> None:
         """
         Constructor for 'Color'.
         """
-        self.red = (255,0,0)
-        self.blue = (0,0,255)
-        self.yellow = (255,255,0)
-        self.black = (0,0,0)
+        self.red = (255, 0, 0)
+        self.blue = (0, 0, 255)
+        self.yellow = (255, 255, 0)
+        self.black = (0, 0, 0)
+
 
 class Draw(Screen):
     def __init__(self, board: Board) -> None:
@@ -23,10 +25,9 @@ class Draw(Screen):
         super().__init__(board.height, board.width)
         self.board = board
         self.spot = Spot()
-        self.piece = Piece(None)
         self.color = Color()
         self.radius = int(self.square_size/2 - 5)
-    
+
     def draw_rectangle(self,
                        draw_height: int,
                        draw_width: int,
@@ -38,7 +39,7 @@ class Draw(Screen):
                          (draw_width * self.square_size, draw_height *
                           self.square_size, self.square_size,
                           self.square_size))
-        
+
     def draw_circle(self, color: tuple[int, int, int],
                     center: tuple[int, int]) -> None:
         """
@@ -48,7 +49,7 @@ class Draw(Screen):
                            color, center,
                            self.radius)
 
-    def gameboard(self):
+    def gameboard(self) -> None:
         """
         Draw the current graphical representation
         of the board.
@@ -64,9 +65,9 @@ class Draw(Screen):
 
                 center = (int(c * self.square_size +
                               self.square_size / 2),
-                              int(draw_height *
-                                  self.square_size +
-                                  self.square_size / 2))
+                          int(draw_height *
+                              self.square_size +
+                              self.square_size / 2))
 
                 if occupant == 1:
                     self.draw_circle(self.color.red, center)

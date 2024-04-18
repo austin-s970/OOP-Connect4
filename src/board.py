@@ -133,7 +133,7 @@ class Board(Screen):
 
     def has_won(self, player_number: int) -> bool:
         """
-        Check if a player has one, returning true if they have and false if not.
+        Check if a player has one, returning true if they have and false if not
         """
         for y in range(self.height):
             for x in range(self.width):
