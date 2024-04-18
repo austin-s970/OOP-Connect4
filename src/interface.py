@@ -2,8 +2,10 @@
 Module to handle the input and player turns
 """
 
+import pygame
+import sys
+from graphics import Screen, Color, Draw
 from board import Board, FullError
-
 
 class Interface():
 
@@ -14,6 +16,9 @@ class Interface():
         self._player_turn: int = 1
         self._turn_count: int = 0
         self.board: Board = Board()
+        self.screen: Screen = Screen(self.board.height, self.board.width)
+        self.color: Color = Color()
+        self.draw: Draw = Draw(self.board.height, self.board.width)
 
     def print_welcome(self) -> None:
         """
@@ -74,26 +79,22 @@ class Interface():
         """
         function to run the game loop
         """
-        column: int
-        print(self.board)
-        while True:
-            self._print_turn_instructions()
-            while True:
-                try:
-                    column = self._read_input()
-                    self.board.drop_piece(column - 1, self._player_turn)
-                    break
-                except ValueError:
-                    print("Please enter a valid column on the game board.")
-                except FullError:
-                    print("That column is already full!")
-                except EOFError:
-                    return
-                except KeyboardInterrupt:
-                    return
-            print(self.board)
-            if (self.board.has_won(self._player_turn)):
-                self._print_winner_message()
-                break
-            else:
-                self._switch_player()
+        pygame.init()
+        screen = self.screen.window
+        self.draw.gameboard(screen)
+        pygame.display.update()
+        clock = pygame.time.Clock()
+        # column: int
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    # Handle mouse button down
+                    pass
+            self.draw.gameboard(screen)
+            pygame.display.update()
+            clock.tick(60)
+
+        pygame.quit()

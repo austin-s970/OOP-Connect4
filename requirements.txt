@@ -10,3 +10,4 @@ lxml
 requests
 pdoc
 kattis-cli
+pygame
