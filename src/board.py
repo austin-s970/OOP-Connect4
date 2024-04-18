@@ -1,4 +1,4 @@
-"""Module Containing Game Board and Piece classes"""
+"""Module Containing Game Board and Piece classes."""
 
 import pygame
 from typing import Optional
@@ -21,30 +21,30 @@ class Screen():
 
 
 class Piece:
-    """Class describing a game piece"""
+    """Class describing a game piece."""
     _player_number: int
 
     def __init__(self, player_number: int) -> None:
-        """Initiate piece class given a player number"""
+        """Initiate piece class given a player number."""
         self._player_number = player_number
 
     @property
     def player_number(self) -> int:
-        """The player number of the player owning this piece"""
+        """The player number of the player owning this piece."""
         return self._player_number
 
 
 class Spot:
-    """Class describing a spot in a game board that can hold a piece"""
+    """Class describing a spot in a game board that can hold a piece."""
     _piece: Optional[Piece]
 
     def __init__(self) -> None:
-        """Initialize the spot class"""
+        """Initialize the spot class."""
         self._piece = None
 
     @property
     def piece(self) -> Optional[Piece]:
-        """The piece contained in this spot"""
+        """The piece contained in this spot."""
         return self._piece
 
     def is_empty(self) -> bool:
@@ -68,7 +68,7 @@ class Spot:
 
 
 class Board(Screen):
-    """Class describing the game board"""
+    """Class describing the game board."""
     _board: list[list[Spot]]
 
     def __init__(self, cols: int = 7, rows: int = 6) -> None:
@@ -80,7 +80,7 @@ class Board(Screen):
         Get the player number of a piece in a spot
 
         Get the player number of the piece in a specific spot on the board.
-        If there is no piece there, return None
+        If there is no piece there, return None.
         """
         relevant_piece: Optional[Piece] = self._board[y][x].piece
         if relevant_piece is None:
@@ -126,14 +126,14 @@ class Board(Screen):
         Check if a player is in a specific location
 
         Check if a player number matches the x and y passed, returning true
-        if it does, and false in all other cases
+        if it does, and false in all other cases.
         """
         return (x >= 0 and x < self.width and y >= 0 and y < self.height and
                 self._board[y][x].is_player(player_number))
 
     def has_won(self, player_number: int) -> bool:
         """
-        Check if a player has one, returning true if they have and false if not
+        Check if a player has one, returning true if they have and false if not.
         """
         for y in range(self.height):
             for x in range(self.width):

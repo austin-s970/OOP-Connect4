@@ -1,3 +1,7 @@
+"""
+Module to manage the graphics.
+"""
+
 import pygame
 from board import Screen, Board, Spot, Piece
 
@@ -27,6 +31,9 @@ class Draw(Screen):
                        draw_height: int,
                        draw_width: int,
                        color: tuple[int, int, int]) -> None:
+        """
+        Given height, width, and a color, draw a rectangle.
+        """
         pygame.draw.rect(self.window, color,
                          (draw_width * self.square_size, draw_height *
                           self.square_size, self.square_size,
@@ -34,11 +41,18 @@ class Draw(Screen):
         
     def draw_circle(self, color: tuple[int, int, int],
                     center: tuple[int, int]) -> None:
+        """
+        Given a color and a center coordinate, draw a circle.
+        """
         pygame.draw.circle(self.window,
                            color, center,
                            self.radius)
 
     def gameboard(self):
+        """
+        Draw the current graphical representation
+        of the board.
+        """
         for c in range(self.board.width):
             for r in range(self.board.height):
 
