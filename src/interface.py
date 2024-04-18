@@ -77,10 +77,10 @@ class Interface():
         message = "Player " + str(player) + " wins!"
         if player == 1:
             label = font.render(message, 1, self.color.red)
-            self.screen.window.blit(label, (30,10))
+            self.screen.window.blit(label, (40,10))
         else:
             label = font.render(message, 1, self.color.yellow)
-            self.screen.window.blit(label, (30,10))
+            self.screen.window.blit(label, (40,10))
         print(message)
 
     def game_loop(self) -> None:
@@ -121,6 +121,8 @@ class Interface():
                 pygame.display.update()
 
                 if event.type == pygame.MOUSEBUTTONDOWN and not wait_time:
+                    # If a player has placed a piece...
+
                     # Clear the top of the screen
                     pygame.draw.rect(self.screen.window,
                                      self.color.black,
