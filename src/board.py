@@ -1,6 +1,7 @@
 """Module Containing Game Board and Piece classes"""
 
 from typing import Optional
+from graphics import Screen
 
 
 class FullError(Exception):
@@ -54,12 +55,13 @@ class Spot:
             return self._piece.player_number
 
 
-class Board:
+class Board(Screen):
     """Class describing the game board"""
     _board: list[list[Spot]]
 
-    def __init__(self, width: int = 7, height: int = 6) -> None:
-        self._board = [[Spot() for i in range(width)] for j in range(height)]
+    def __init__(self, cols: int = 7, rows: int = 6) -> None:
+        super().__init__(rows, cols)
+        self._board = [[Spot() for i in range(cols)] for j in range(rows)]
 
     def get_player_at_spot(self, x: int, y: int) -> int:
         """
@@ -83,9 +85,9 @@ class Board:
         return len(self._board)
 
     def drop_piece(self, x: int, player_number: int) -> None:
-        if not (x >= 0 and x < self.width):
+        if not (x >= 0 and x < self.window_width):
             raise ValueError
-        for y in range(self.height):
+        for y in range(self.window_height):
             if self._board[y][x].is_empty():
                 self._board[y][x].add_piece(player_number)
                 break

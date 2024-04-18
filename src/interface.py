@@ -4,6 +4,7 @@ Module to handle the input and player turns
 
 import pygame
 import sys
+import math
 from graphics import Screen, Color, Draw
 from board import Board, FullError
 
@@ -69,11 +70,13 @@ class Interface():
                 print("Please enter a valid column number.")
         return column
 
-    def _print_winner_message(self) -> None:
+    def _print_winner_message(self, player: int) -> None:
         """
         function to print the message if a player wins
         """
-        pass
+        winner_message = "Congratulations Player " + str(player) + "! You have won the game!"
+        print(winner_message)
+        sys.exit()
 
     def game_loop(self) -> None:
         """
@@ -91,8 +94,26 @@ class Interface():
                 if event.type == pygame.QUIT:
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    # Handle mouse button down
-                    pass
+                    try:
+                        posx = event.pos[0]
+                        column = int(math.floor(posx/self.screen.square_size))
+                        self.board.drop_piece(column, self._player_turn)
+                        print(self.board)
+                        if (self.board.has_won(self._player_turn)):
+                            self._print_winner_message(self._player_turn)
+                            break
+                        else:
+                            self._switch_player()
+                        break
+                    except ValueError:
+                        print("Please enter a valid column on the game board.")
+                    except FullError:
+                        print("That column is already full!")
+                    except EOFError:
+                        return
+                    except KeyboardInterrupt:
+                        return
+
             self.draw.gameboard(screen)
             pygame.display.update()
             clock.tick(60)
