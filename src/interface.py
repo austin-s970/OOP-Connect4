@@ -87,11 +87,25 @@ class Interface():
         pygame.display.update()
         clock = pygame.time.Clock()
         # column: int
-        running = True
-        while running:
+        game_over = False
+        while not game_over:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
+
+                if event.type == pygame.MOUSEMOTION:
+                    screen.fill(self.color.black)
+                    self.draw.gameboard()
+                    posx = event.pos[0]
+                    if self._player_turn == 1:
+                        self.draw.draw_circle(self.color.red,
+                                              (posx,
+                                               self.draw.square_size/2))
+                    else:
+                        self.draw.draw_circle(self.color.yellow,
+                                              (posx,
+                                               self.draw.square_size/2))
+                pygame.display.update()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     try:
                         posx = event.pos[0]
@@ -102,7 +116,7 @@ class Interface():
                         pygame.display.update()
                         if (self.board.has_won(self._player_turn)):
                             self._print_winner_message(self._player_turn)
-                            break
+                            game_over = True
                         else:
                             self._switch_player()
                         break
@@ -114,7 +128,5 @@ class Interface():
                         return
                     except KeyboardInterrupt:
                         return
-            pygame.display.update()
-            clock.tick(60)
 
         pygame.quit()

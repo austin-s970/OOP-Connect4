@@ -23,7 +23,8 @@ class Draw(Screen):
         self.color = Color()
         self.radius = int(self.square_size/2 - 5)
     
-    def draw_rectangle(self, draw_height: int,
+    def draw_rectangle(self,
+                       draw_height: int,
                        draw_width: int,
                        color: tuple[int, int, int]) -> None:
         pygame.draw.rect(self.window, color,
