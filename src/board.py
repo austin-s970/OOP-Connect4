@@ -1,11 +1,23 @@
 """Module Containing Game Board and Piece classes"""
 
+import pygame
 from typing import Optional
-from graphics import Screen
 
 
 class FullError(Exception):
     pass
+
+
+class Screen():
+    def __init__(self, rows: int, cols: int) -> None:
+        """
+        Constructor for 'Screen'.
+        """
+        self.square_size = 100
+        self.window_width = cols * self.square_size
+        self.window_height = (rows+1) * self.square_size
+        self.window_size = (self.window_width, self.window_height)
+        self.window = pygame.display.set_mode(self.window_size)
 
 
 class Piece:
@@ -13,7 +25,7 @@ class Piece:
     _player_number: int
 
     def __init__(self, player_number: int) -> None:
-        """Initiate picee clas given a player number"""
+        """Initiate piece class given a player number"""
         self._player_number = player_number
 
     @property

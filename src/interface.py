@@ -5,11 +5,10 @@ Module to handle the input and player turns
 import pygame
 import sys
 import math
-from graphics import Screen, Color, Draw
-from board import Board, FullError
+from graphics import Color, Draw
+from board import Screen, Board, FullError
 
 class Interface():
-
     def __init__(self) -> None:
         """
         constructor
@@ -19,7 +18,7 @@ class Interface():
         self.board: Board = Board()
         self.screen: Screen = Screen(self.board.height, self.board.width)
         self.color: Color = Color()
-        self.draw: Draw = Draw(self.board.height, self.board.width)
+        self.draw: Draw = Draw(self.board)
 
     def print_welcome(self) -> None:
         """
@@ -99,6 +98,8 @@ class Interface():
                         column = int(math.floor(posx/self.screen.square_size))
                         self.board.drop_piece(column, self._player_turn)
                         print(self.board)
+                        self.draw.gameboard(screen)
+                        pygame.display.update()
                         if (self.board.has_won(self._player_turn)):
                             self._print_winner_message(self._player_turn)
                             break
@@ -113,8 +114,6 @@ class Interface():
                         return
                     except KeyboardInterrupt:
                         return
-
-            self.draw.gameboard(screen)
             pygame.display.update()
             clock.tick(60)
 
