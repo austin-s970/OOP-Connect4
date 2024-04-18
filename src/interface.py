@@ -83,7 +83,7 @@ class Interface():
         """
         pygame.init()
         screen = self.screen.window
-        self.draw.gameboard(screen)
+        self.draw.gameboard()
         pygame.display.update()
         clock = pygame.time.Clock()
         # column: int
@@ -98,7 +98,7 @@ class Interface():
                         column = int(math.floor(posx/self.screen.square_size))
                         self.board.drop_piece(column, self._player_turn)
                         print(self.board)
-                        self.draw.gameboard(screen)
+                        self.draw.gameboard()
                         pygame.display.update()
                         if (self.board.has_won(self._player_turn)):
                             self._print_winner_message(self._player_turn)

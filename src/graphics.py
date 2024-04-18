@@ -22,19 +22,42 @@ class Draw(Screen):
         self.piece = Piece(None)
         self.color = Color()
         self.radius = int(self.square_size/2 - 5)
+    
+    def draw_rectangle(self, draw_height: int,
+                       draw_width: int,
+                       color: tuple[int, int, int]) -> None:
+        pygame.draw.rect(self.window, color,
+                         (draw_width * self.square_size, draw_height *
+                          self.square_size, self.square_size,
+                          self.square_size))
+        
+    def draw_circle(self, color: tuple[int, int, int],
+                    center: tuple[int, int]) -> None:
+        pygame.draw.circle(self.window,
+                           color, center,
+                           self.radius)
 
-    def gameboard(self, screen):
+    def gameboard(self):
         for c in range(self.board.width):
             for r in range(self.board.height):
+
                 draw_height = self.board.height - r
-                pygame.draw.rect(screen, self.color.blue, (c * self.square_size, draw_height * self.square_size, self.square_size, self.square_size))
+
+                self.draw_rectangle(draw_height, c, self.color.blue)
+
                 occupant = self.board.get_player_at_spot(c, r)
-                circle_center = (int(c * self.square_size + self.square_size / 2), int(draw_height * self.square_size + self.square_size / 2))
+
+                center = (int(c * self.square_size +
+                              self.square_size / 2),
+                              int(draw_height *
+                                  self.square_size +
+                                  self.square_size / 2))
+
                 if occupant == 1:
-                    pygame.draw.circle(screen, self.color.red, circle_center, self.radius)
+                    self.draw_circle(self.color.red, center)
                 elif occupant == 2:
-                    pygame.draw.circle(screen, self.color.yellow, circle_center, self.radius)
+                    self.draw_circle(self.color.yellow, center)
                 else:
-                    pygame.draw.circle(screen, self.color.black, circle_center, self.radius)
+                    self.draw_circle(self.color.black, center)
 
         pygame.display.update()
