@@ -26,9 +26,10 @@ class Draw(Screen):
     def gameboard(self, screen):
         for c in range(self.board.width):
             for r in range(self.board.height):
-                pygame.draw.rect(screen, self.color.blue, (c * self.square_size, (r + 1) * self.square_size, self.square_size, self.square_size))
+                draw_height = self.board.height - r
+                pygame.draw.rect(screen, self.color.blue, (c * self.square_size, draw_height * self.square_size, self.square_size, self.square_size))
                 occupant = self.board.get_player_at_spot(c, r)
-                circle_center = (int(c * self.square_size + self.square_size / 2), int((r + 1) * self.square_size + self.square_size / 2))
+                circle_center = (int(c * self.square_size + self.square_size / 2), int(draw_height * self.square_size + self.square_size / 2))
                 if occupant == 1:
                     pygame.draw.circle(screen, self.color.red, circle_center, self.radius)
                 elif occupant == 2:
