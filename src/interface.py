@@ -73,9 +73,15 @@ class Interface():
         """
         function to print the message if a player wins
         """
-        winner_message = "Congratulations Player " + str(player) + "! You have won the game!"
-        print(winner_message)
-        sys.exit()
+        font = pygame.font.SysFont("monospace", 75)
+        message = "Player " + str(player) + " wins!"
+        if player == 1:
+            label = font.render(message, 1, self.color.red)
+            self.screen.window.blit(label, (30,10))
+        else:
+            label = font.render(message, 1, self.color.yellow)
+            self.screen.window.blit(label, (30,10))
+        print(message)
 
     def game_loop(self) -> None:
         """
@@ -86,14 +92,15 @@ class Interface():
         self.draw.gameboard()
         pygame.display.update()
         clock = pygame.time.Clock()
-        # column: int
         game_over = False
+        wait_time = None
+
         while not game_over:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
 
-                if event.type == pygame.MOUSEMOTION:
+                if event.type == pygame.MOUSEMOTION and not wait_time:
                     screen.fill(self.color.black)
                     self.draw.gameboard()
                     posx = event.pos[0]
@@ -106,7 +113,12 @@ class Interface():
                                               (posx,
                                                self.draw.square_size/2))
                 pygame.display.update()
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN and not wait_time:
+                    pygame.draw.rect(self.screen.window,
+                                     self.color.black,
+                                     (0,0,self.screen.window_width,
+                                      self.screen.square_size))
+                    # self.draw.draw_rectangle(0,0,self.color.black)
                     try:
                         posx = event.pos[0]
                         column = int(math.floor(posx/self.screen.square_size))
@@ -116,7 +128,7 @@ class Interface():
                         pygame.display.update()
                         if (self.board.has_won(self._player_turn)):
                             self._print_winner_message(self._player_turn)
-                            game_over = True
+                            wait_time = pygame.time.get_ticks()
                         else:
                             self._switch_player()
                         break
@@ -128,5 +140,13 @@ class Interface():
                         return
                     except KeyboardInterrupt:
                         return
+
+            if wait_time:
+                if pygame.time.get_ticks() - wait_time > 3000:
+                    game_over = True
+                else:
+                    pygame.display.update()
+
+            clock.tick(60)
 
         pygame.quit()
