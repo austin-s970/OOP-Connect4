@@ -181,7 +181,7 @@ class Board(Screen):
         """
         return (x >= 0 and x < self.width and y >= 0 and y < self.height and
                 self._board[y][x].is_player(player_number))
-    
+
     def _diagonal_win(self, player_number: int) -> bool:
         """
         Check for a diagonal win.
