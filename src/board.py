@@ -200,5 +200,16 @@ class Board(Screen):
                             break
                     else:
                         return True
-                    # diagonal 1
+                    # positive diagonals
+                    for xy1 in range(y + 1, y + 4):
+                        if not self.is_player(x + xy1, y + xy1, player_number):
+                            break
+                    else:
+                        return True
+                    # negative diagonals
+                    for xy2 in range(y + 1, y + 4):
+                        if not self.is_player(x - xy2, y + xy2, player_number):
+                            break
+                    else:
+                        return True
         return False
