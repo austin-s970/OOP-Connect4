@@ -19,10 +19,10 @@ class Interface():
         """
         self._player_turn: int = 1
         self._turn_count: int = 0
-        self.board: Board = Board()
-        self.screen: Screen = Screen(self.board.height, self.board.width)
-        self.color: Color = Color()
-        self.draw: Draw = Draw(self.board)
+        self._board: Board = Board()
+        self._screen: Screen = Screen(self.board.height, self.board.width)
+        self._color: Color = Color()
+        self._draw: Draw = Draw(self._board)
 
     def print_welcome(self) -> None:
         """
@@ -47,6 +47,46 @@ class Interface():
             self._player_turn = 1
 
     @property
+    def screen(self) -> Screen:
+        """
+        getter property for the screen
+
+        Returns:
+            Screen: an instance of the 'Screen' class.
+        """
+        return self._screen
+
+    @property
+    def board(self) -> Board:
+        """
+        getter property for the board
+
+        Returns:
+            Board: an instance of the 'Board' class.
+        """
+        return self._board
+
+    @property
+    def color(self) -> Color:
+        """
+        getter property for a color
+
+        Returns:
+            Color: an instance of the 'Color' class.
+        """
+        return self._color
+
+    @property
+    def draw(self) -> Draw:
+        """
+        getter property for drawing functionality.
+
+        Returns:
+            Draw: an instance of the 'Draw' class.
+        """
+        return self._draw
+
+    @property
     def player_turn(self) -> int:
         """
         getter property for the player_turn
@@ -62,7 +102,7 @@ class Interface():
         getter property for the turn count
 
         Returns:
-            int: the integer the turn count.
+            int: the integer for the turn count.
         """
         return self._turn_count
 
@@ -90,10 +130,12 @@ class Interface():
         font = pygame.font.SysFont("monospace", 75)
         message: str = "Player " + str(player) + " wins!"
         if player == 1:
-            label = font.render(message, 1, self.color.red)
+            color = self.color.red
+            label = font.render(message, 1, color)
             self.screen.window.blit(label, (40, 10))
         else:
-            label = font.render(message, 1, self.color.yellow)
+            color = self.color.yellow
+            label = font.render(message, 1, color)
             self.screen.window.blit(label, (40, 10))
         print(message)
 
@@ -103,8 +145,9 @@ class Interface():
         """
         font = pygame.font.SysFont("monospace", 75)
         message: str = "Tie Game!"
-        label = font.render(message, 1, self.color.blue)
-        self.screen.window.blit(label, (40, 10))
+        color = self.color.lightblue
+        label = font.render(message, 1, color)
+        self.screen.window.blit(label, (160, 10))
         print(message)
 
     def _increment_turn(self) -> None:
@@ -152,19 +195,22 @@ class Interface():
                             event_pos: list[int]) -> None:
         # If the mouse is moving, update the location of
         # the hovering piece
-        screen.fill(self.color.black)
+        color = self.color.black
+        screen.fill(color)
         self.draw.gameboard()
         posx = event_pos[0]
         if self._player_turn == 1:
             # If it's player 1's turn,
             # the circle will be red
-            self.draw.draw_circle(self.color.red,
+            color = self.color.red
+            self.draw.draw_circle(color,
                                   (posx,
                                    int(self.draw.square_size/2)))
         else:
             # If it's player 2's turn,
             # the circle will be yellow
-            self.draw.draw_circle(self.color.yellow,
+            color = self.color.yellow
+            self.draw.draw_circle(color,
                                   (posx,
                                    int(self.draw.square_size/2)))
 
@@ -172,8 +218,9 @@ class Interface():
         # If a player has placed a piece...
 
         # Clear the top of the screen
+        color = self.color.black
         pygame.draw.rect(self.screen.window,
-                         self.color.black,
+                         color,
                          (0, 0, self.screen.window_width,
                           self.screen.square_size))
         try:

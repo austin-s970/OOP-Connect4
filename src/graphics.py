@@ -11,10 +11,61 @@ class Color():
         """
         Constructor for 'Color'.
         """
-        self.red = (255, 0, 0)
-        self.blue = (0, 0, 255)
-        self.yellow = (255, 255, 0)
-        self.black = (0, 0, 0)
+        self._red = (255, 0, 0)
+        self._blue = (0, 0, 255)
+        self._yellow = (255, 255, 0)
+        self._lightblue = (0, 255, 255)
+        self._black = (0, 0, 0)
+
+    @property
+    def red(self) -> tuple[int, int , int]:
+        """
+        getter property for the color 'red'
+
+        Returns:
+            tuple[int, int, int]: a tuple representing the RGB value.
+        """
+        return self._red
+
+    @property
+    def blue(self) -> tuple[int, int , int]:
+        """
+        getter property for the color 'blue'
+
+        Returns:
+            tuple[int, int, int]: a tuple representing the RGB value.
+        """
+        return self._blue
+
+    @property
+    def yellow(self) -> tuple[int, int , int]:
+        """
+        getter property for the color 'yellow'
+
+        Returns:
+            tuple[int, int, int]: a tuple representing the RGB value.
+        """
+        return self._yellow
+
+    @property
+    def lightblue(self) -> tuple[int, int , int]:
+        """
+        getter property for the color 'lightblue'
+
+        Returns:
+            tuple[int, int, int]: a tuple representing the RGB value.
+        """
+        return self._lightblue
+
+    @property
+    def black(self) -> tuple[int, int , int]:
+        """
+        getter property for the color 'black'
+
+        Returns:
+            tuple[int, int, int]: a tuple representing the RGB value.
+        """
+        return self._black
 
 
 class Draw(Screen):
@@ -23,10 +74,50 @@ class Draw(Screen):
         Constructor for 'Draw'.
         """
         super().__init__(board.height, board.width)
-        self.board = board
-        self.spot = Spot()
-        self.color = Color()
-        self.radius = int(self.square_size/2 - 5)
+        self._board = board
+        self._spot = Spot()
+        self._color = Color()
+        self._radius = int(self.square_size/2 - 5)
+
+    @property
+    def board(self) -> Board:
+        """
+        getter property for the board
+
+        Returns:
+            Board: an instance of the 'Board' class.
+        """
+        return self._board
+
+    @property
+    def spot(self) -> Spot:
+        """
+        getter property for a spot on the board
+
+        Returns:
+            Spot: an instance of the 'Spot' class.
+        """
+        return self._spot
+
+    @property
+    def color(self) -> Color:
+        """
+        getter property for a color
+
+        Returns:
+            Color: an instance of the 'Color' class.
+        """
+        return self._color
+
+    @property
+    def radius(self) -> int:
+        """
+        getter property for the radius
+
+        Returns:
+            int: the integer representing the radius.
+        """
+        return self._radius
 
     def draw_rectangle(self,
                        draw_height: int,
@@ -54,14 +145,26 @@ class Draw(Screen):
         Draw the current graphical representation
         of the board.
         """
-        for c in range(self.board.width):
-            for r in range(self.board.height):
+        # Define the colors to be used for the board
+        # and pieces.
 
-                draw_height = self.board.height - r
+        hue = self.color
 
-                self.draw_rectangle(draw_height, c, self.color.blue)
+        red = hue.red
+        blue = hue.blue
+        yellow = hue.yellow
+        black = hue.black
 
-                occupant = self.board.get_player_at_spot(c, r)
+        gameboard = self.board
+
+        for c in range(gameboard.width):
+            for r in range(gameboard.height):
+
+                draw_height = gameboard.height - r
+
+                self.draw_rectangle(draw_height, c, blue)
+
+                occupant = gameboard.get_player_at_spot(c, r)
 
                 center = (int(c * self.square_size +
                               self.square_size / 2),
@@ -70,10 +173,10 @@ class Draw(Screen):
                               self.square_size / 2))
 
                 if occupant == 1:
-                    self.draw_circle(self.color.red, center)
+                    self.draw_circle(red, center)
                 elif occupant == 2:
-                    self.draw_circle(self.color.yellow, center)
+                    self.draw_circle(yellow, center)
                 else:
-                    self.draw_circle(self.color.black, center)
+                    self.draw_circle(black, center)
 
         pygame.display.update()
