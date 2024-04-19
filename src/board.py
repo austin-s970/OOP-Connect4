@@ -70,6 +70,7 @@ class Screen():
         """
         return self._window_height
 
+
 class Piece:
     """Class describing a game piece."""
     _player_number: int
@@ -183,7 +184,7 @@ class Board(Screen):
 
     def has_won(self, player_number: int) -> bool:
         """
-        Check if a player has one, returning true if they have and false if not
+        Check if a player has won, returning true if they have and false if not
         """
         for y in range(self.height):
             for x in range(self.width):
