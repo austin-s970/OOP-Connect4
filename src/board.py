@@ -182,6 +182,27 @@ class Board(Screen):
         return (x >= 0 and x < self.width and y >= 0 and y < self.height and
                 self._board[y][x].is_player(player_number))
 
+    def _diagonal_win(self, player_number: int) -> bool:
+        """
+        Check for a diagonal win.
+        Return true if it has occurred, false if not.
+        """
+        for y in range(self.height):
+            for x in range(self.width):
+                # positive diagonals
+                for xy1 in range(y + 1, y + 4):
+                    if not self.is_player(x + xy1, y + xy1, player_number):
+                        break
+                else:
+                    return True
+                # negative diagonals
+                for xy2 in range(y + 1, y + 4):
+                    if not self.is_player(x - xy2, y + xy2, player_number):
+                        break
+                else:
+                    return True
+        return False
+
     def has_won(self, player_number: int) -> bool:
         """
         Check if a player has won, returning true if they have and false if not
@@ -201,5 +222,6 @@ class Board(Screen):
                             break
                     else:
                         return True
-                    # diagonal 1
+                    if self._diagonal_win(player_number):
+                        return True
         return False
