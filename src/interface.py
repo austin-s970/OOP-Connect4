@@ -55,11 +55,14 @@ class Interface():
             int: the integer representing what player's turn it is.
         """
         return self._player_turn
-    
+
     @property
-    def turn_count(self) -> None:
+    def turn_count(self) -> int:
         """
         getter property for the turn count
+
+        Returns:
+            int: the integer the turn count.
         """
         return self._turn_count
 
