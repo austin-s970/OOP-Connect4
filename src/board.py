@@ -70,6 +70,7 @@ class Screen():
         """
         return self._window_height
 
+
 class Piece:
     """Class describing a game piece."""
     _player_number: int

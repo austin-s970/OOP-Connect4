@@ -26,7 +26,7 @@ class Color():
             tuple[int, int, int]: a tuple representing the RGB value.
         """
         return self._red
-    
+
     @property
     def blue(self) -> tuple[int, int , int]:
         """
@@ -36,7 +36,7 @@ class Color():
             tuple[int, int, int]: a tuple representing the RGB value.
         """
         return self._blue
-    
+
     @property
     def yellow(self) -> tuple[int, int , int]:
         """
@@ -46,7 +46,7 @@ class Color():
             tuple[int, int, int]: a tuple representing the RGB value.
         """
         return self._yellow
-    
+
     @property
     def lightblue(self) -> tuple[int, int , int]:
         """
@@ -56,7 +56,7 @@ class Color():
             tuple[int, int, int]: a tuple representing the RGB value.
         """
         return self._lightblue
-    
+
     @property
     def black(self) -> tuple[int, int , int]:
         """
@@ -88,7 +88,7 @@ class Draw(Screen):
             Board: an instance of the 'Board' class.
         """
         return self._board
-    
+
     @property
     def spot(self) -> Spot:
         """
@@ -98,7 +98,7 @@ class Draw(Screen):
             Spot: an instance of the 'Spot' class.
         """
         return self._spot
-    
+
     @property
     def color(self) -> Color:
         """
@@ -108,7 +108,7 @@ class Draw(Screen):
             Color: an instance of the 'Color' class.
         """
         return self._color
-    
+
     @property
     def radius(self) -> int:
         """
