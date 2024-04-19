@@ -13,12 +13,62 @@ class Screen():
         """
         Constructor for 'Screen'.
         """
-        self.square_size = 100
-        self.window_width = cols * self.square_size
-        self.window_height = (rows+1) * self.square_size
-        self.window_size = (self.window_width, self.window_height)
-        self.window = pygame.display.set_mode(self.window_size)
+        self._square_size = 100
+        self._window_width = cols * self._square_size
+        self._window_height = (rows+1) * self._square_size
+        self._window_size = (self._window_width, self._window_height)
+        self._window = pygame.display.set_mode(self._window_size)
 
+    @property
+    def window(self) -> pygame.Surface:
+        """
+        getter property for the screen window
+
+        Returns:
+            pygame.Surface: an instance of pygame's 'Surface' class.
+        """
+        return self._window
+
+    @property
+    def window_size(self) -> tuple[int, int]:
+        """
+        getter property for the screen window's size
+
+        Returns:
+            tuple[int, int]: 'x' and 'y' values representing the
+            and height of the screen window.
+        """
+        return self._window_size
+
+    @property
+    def square_size(self) -> int:
+        """
+        getter property for the square size
+
+        Returns:
+            int: an integer representing the square size.
+        """
+        return self._square_size
+
+    @property
+    def window_width(self) -> int:
+        """
+        getter property for the screen window width
+
+        Returns:
+            int: an integer representing the window width.
+        """
+        return self._window_width
+
+    @property
+    def window_height(self) -> int:
+        """
+        getter property for the screen window height
+
+        Returns:
+            int: an integer representing the window height.
+        """
+        return self._window_height
 
 class Piece:
     """Class describing a game piece."""
