@@ -55,6 +55,13 @@ class Interface():
             int: the integer representing what player's turn it is.
         """
         return self._player_turn
+    
+    @property
+    def turn_count(self) -> None:
+        """
+        getter property for the turn count
+        """
+        return self._turn_count
 
     def _read_input(self) -> int:
         """
@@ -78,7 +85,7 @@ class Interface():
         function to print the message if a player wins.
         """
         font = pygame.font.SysFont("monospace", 75)
-        message = "Player " + str(player) + " wins!"
+        message: str = "Player " + str(player) + " wins!"
         if player == 1:
             label = font.render(message, 1, self.color.red)
             self.screen.window.blit(label, (40, 10))
@@ -86,6 +93,22 @@ class Interface():
             label = font.render(message, 1, self.color.yellow)
             self.screen.window.blit(label, (40, 10))
         print(message)
+
+    def _print_tie_message(self) -> None:
+        """
+        funcion to print the message if the players tie
+        """
+        font = pygame.font.SysFont("monospace", 75)
+        message: str = "Tie Game!"
+        label = font.render(message, 1, self.color.blue)
+        self.screen.window.blit(label, (40, 10))
+        print(message)
+
+    def _increment_turn(self) -> None:
+        """
+        function to increment the game turn
+        """
+        self._turn_count += 1
 
     def game_loop(self) -> None:
         """
@@ -159,10 +182,14 @@ class Interface():
             # Update the state of the board
             self.draw.gameboard()
             pygame.display.update()
-
+            self._increment_turn()
             if (self.board.has_won(self._player_turn)):
                 # Check for the winning condition
                 self._print_winner_message(self._player_turn)
+                return pygame.time.get_ticks()
+            elif self._turn_count == 42:
+                # Tie game
+                self._print_tie_message()
                 return pygame.time.get_ticks()
             else:
                 self._switch_player()
