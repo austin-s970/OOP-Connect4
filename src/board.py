@@ -202,5 +202,4 @@ class Board(Screen):
                     else:
                         return True
                     # diagonal 1
-                    
         return False
