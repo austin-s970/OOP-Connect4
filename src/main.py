@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-from interface import Interface
+from game import Game
 
 
 def main() -> None:
-    interface: Interface = Interface()
-    interface.game_loop()
+    game: Game = Game()
+    game.game_loop()
 
 
 if __name__ == '__main__':
