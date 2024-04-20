@@ -169,6 +169,10 @@ class Interface():
         self.screen.window.blit(label, (20, 5))
 
     def _replay(self, event: pygame.event.EventType) -> bool:
+        """
+        function to determine if the player wishes to play
+        again or not. Returns true if so, false if not.
+        """
         self._print_replay_message()
         pygame.display.update()
 
