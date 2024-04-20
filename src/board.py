@@ -245,13 +245,15 @@ class Board(Screen):
         # Check for positive diagonals (bottom-left to top-right)
         for y in range(self.height - 3):
             for x in range(self.width - 3):
-                if all(self.is_player(x + i, y + i, player_number) for i in range(4)):
+                if all(self.is_player(x + i, y + i,
+                                      player_number) for i in range(4)):
                     return True
 
         # Check for negative diagonals (top-left to bottom-right)
         for y in range(3, self.height):
             for x in range(self.width - 3):
-                if all(self.is_player(x + i, y - i, player_number) for i in range(4)):
+                if all(self.is_player(x + i, y - i,
+                                      player_number) for i in range(4)):
                     return True
 
         return False
