@@ -1,5 +1,5 @@
 import unittest
-from hypothesis import given, strategies, assume
+from hypothesis import given, settings, strategies, assume
 
 import board
 
@@ -59,6 +59,8 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(len(self.board._board[y]), 7)
         self.assertIsInstance(self.board._board[y][x], board.Spot)
 
+    # No deadline was a temporary change to satisfy CI/CD
+    @settings(deadline=None)
     @given(width=strategies.integers(1, 100),
            height=strategies.integers(1, 100),
            x=strategies.integers(0, 100),

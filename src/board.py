@@ -123,13 +123,56 @@ class Board(Screen):
     _board: list[list[Spot]]
 
     def __init__(self, cols: int = 7, rows: int = 6) -> None:
+        """
+        Constructor for the board.
+        """
+        self._rows = rows
+        self._cols = cols
         super().__init__(rows, cols)
+        self._spot = Spot()
         self._board = [[Spot() for i in range(cols)] for j in range(rows)]
+
+    @property
+    def spot(self) -> Spot:
+        """
+        getter property for a spot on the board
+
+        Returns:
+            Spot: an instance of the 'Spot' class.
+        """
+        return self._spot
+
+    @property
+    def rows(self) -> int:
+        """
+        getter property for the rows
+
+        Returns:
+            int: the integer count for rows.
+        """
+        return self._rows
+
+    @property
+    def cols(self) -> int:
+        """
+        getter property for the columns
+
+        Returns:
+            int: the integer count for columns.
+        """
+        return self._cols
+
+    def reset(self) -> None:
+        """
+        Function to reset the board in the event
+        of a replay.
+        """
+        for row in self._board:
+            for spot in row:
+                spot._piece = None
 
     def get_player_at_spot(self, x: int, y: int) -> int:
         """
-        Get the player number of a piece in a spot
-
         Get the player number of the piece in a specific spot on the board.
         If there is no piece there, return None.
         """
@@ -141,10 +184,22 @@ class Board(Screen):
 
     @property
     def width(self) -> int:
+        """
+        getter property for the board width
+
+        Returns:
+            int: the integer value for the board width.
+        """
         return len(self._board[0])
 
     @property
     def height(self) -> int:
+        """
+        getter property for the board height
+
+        Returns:
+            int: the integer value for the board height.
+        """
         return len(self._board)
 
     def drop_piece(self, x: int, player_number: int) -> None:
