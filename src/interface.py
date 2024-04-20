@@ -149,7 +149,7 @@ class Interface():
         label = font.render(message, 1, color)
         self.screen.window.blit(label, (160, 10))
         print(message)
-    
+
     def _print_replay_message(self) -> None:
         """
         funcion to print the message asking
@@ -167,9 +167,8 @@ class Interface():
         color = self.color.lightblue
         label = font.render(message, 1, color)
         self.screen.window.blit(label, (20, 5))
-    
+
     def _replay(self, event: pygame.event.EventType) -> bool:
-        end_time = pygame.time.get_ticks()
         self._print_replay_message()
         pygame.display.update()
 
@@ -204,7 +203,6 @@ class Interface():
         self.draw.gameboard()
         pygame.display.update()
         clock = pygame.time.Clock()
-        game_ending = False
         game_over = False
         wait_time = None
 
@@ -229,13 +227,13 @@ class Interface():
                     replay = self._replay(event)
 
                     # if response is false, close the game
-                    if replay == False:
+                    if replay is False:
                         game_over = True
                     else:
                         self.board.reset()  # Reset the board
                         self.draw.gameboard()  # Redraw the empty board
 
-                        game_over = False # Allow the gameloop to continue
+                        game_over = False #  Allow the gameloop to continue
 
                         # reset turn variables
                         self._turn_count = 0
@@ -246,7 +244,7 @@ class Interface():
                 else:
                     pygame.display.update()
 
-            clock.tick(60)  # Keep the game loop running smoothly                
+            clock.tick(60)  # Keep the game loop running smoothly
 
     def handle_mouse_motion(self, screen: pygame.Surface,
                             event_pos: list[int]) -> None:

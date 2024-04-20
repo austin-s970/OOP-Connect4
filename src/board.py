@@ -128,19 +128,19 @@ class Board(Screen):
         super().__init__(rows, cols)
         self._spot = Spot()
         self._board = [[Spot() for i in range(cols)] for j in range(rows)]
-    
+
     @property
     def spot(self) -> None:
         return self._spot
-    
+
     @property
     def rows(self) -> None:
         return self._rows
-    
+
     @property
     def cols(self) -> None:
         return self._cols
-    
+
     def reset(self) -> None:
         for row in self._board:
             for spot in row:
@@ -148,8 +148,6 @@ class Board(Screen):
 
     def get_player_at_spot(self, x: int, y: int) -> int:
         """
-        Get the player number of a piece in a spot
-
         Get the player number of the piece in a specific spot on the board.
         If there is no piece there, return None.
         """
