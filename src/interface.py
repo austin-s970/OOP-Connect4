@@ -233,7 +233,7 @@ class Interface():
                         self.board.reset()  # Reset the board
                         self.draw.gameboard()  # Redraw the empty board
 
-                        game_over = False #  Allow the gameloop to continue
+                        game_over = False  # Allow the gameloop to continue
 
                         # reset turn variables
                         self._turn_count = 0
