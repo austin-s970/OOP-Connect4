@@ -145,10 +145,49 @@ class Interface():
         """
         font = pygame.font.SysFont("monospace", 75)
         message: str = "Tie Game!"
-        color = self.color.lightblue
+        color = self.color.blue
         label = font.render(message, 1, color)
         self.screen.window.blit(label, (160, 10))
         print(message)
+    
+    def _print_replay_message(self) -> None:
+        """
+        funcion to print the message asking
+        if the player wants to play again
+        """
+        # Clear the top of the screen
+        color = self.color.black
+        pygame.draw.rect(self.screen.window,
+                         color,
+                         (0, 0, self.screen.window_width,
+                          self.screen.square_size))
+
+        font = pygame.font.SysFont("monospace", 22)
+        message: str = "Click anywhere to play again, or press Esc to quit."
+        color = self.color.lightblue
+        label = font.render(message, 1, color)
+        self.screen.window.blit(label, (20, 5))
+    
+    def _replay(self, event: pygame.event.EventType) -> bool:
+        end_time = pygame.time.get_ticks()
+        self._print_replay_message()
+        pygame.display.update()
+
+        # Start an event loop to handle mouse click specifically for replay
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    return True  # Return True immediately on mouse click
+
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        return False
+
+                elif event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+            pygame.time.delay(100)
 
     def _increment_turn(self) -> None:
         """
@@ -165,6 +204,7 @@ class Interface():
         self.draw.gameboard()
         pygame.display.update()
         clock = pygame.time.Clock()
+        game_ending = False
         game_over = False
         wait_time = None
 
@@ -179,17 +219,34 @@ class Interface():
 
                 if event.type == pygame.MOUSEBUTTONDOWN and not wait_time:
                     wait_time = self.handle_mouse_click(event.pos)
+
             if wait_time:
                 # If the game has been won, check how long it's been
                 if pygame.time.get_ticks() - wait_time > 3000:
-                    # If 3 seconds have passed, close the window
-                    game_over = True
+                    # If 3 seconds have passed, end the game
+                    # and ask if the player wants to replay
+
+                    replay = self._replay(event)
+
+                    # if response is false, close the game
+                    if replay == False:
+                        game_over = True
+                    else:
+                        self.board.reset()  # Reset the board
+                        self.draw.gameboard()  # Redraw the empty board
+
+                        game_over = False # Allow the gameloop to continue
+
+                        # reset turn variables
+                        self._turn_count = 0
+                        self._player_turn = 1
+
+                        # start a new game
+                        self.game_loop()
                 else:
                     pygame.display.update()
 
-            clock.tick(60)  # Keep the game loop running smoothly
-
-        pygame.quit()  # End the game
+            clock.tick(60)  # Keep the game loop running smoothly                
 
     def handle_mouse_motion(self, screen: pygame.Surface,
                             event_pos: list[int]) -> None:
