@@ -178,8 +178,8 @@ class Game():
                         game_over = False  # Allow the gameloop to continue
 
                         # reset turn variables
-                        self._turn_count = 0
-                        self._player_turn = 1
+                        self.inter._turn_count = 0
+                        self.inter._player_turn = 1
 
                         # start a new game
                         self.game_loop()
