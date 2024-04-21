@@ -1,3 +1,4 @@
+import pygame
 import unittest
 from unittest.mock import Mock, patch
 from hypothesis import given, settings, strategies, assume
@@ -57,6 +58,8 @@ class TestDraw(unittest.TestCase):
         self.mock_board = Mock(spec=Board)
         self.mock_board.height = 10
         self.mock_board.width = 10
+        self.mock_board.get_player_at_spot = Mock(side_effect=lambda x, y: None)
+        self.mock_radius = Mock()
 
         # Initialize Draw with the mock board
         self.draw = Draw(self.mock_board)
@@ -133,3 +136,36 @@ class TestDraw(unittest.TestCase):
                                                  expected_color, 
                                                  expected_center, 
                                                  self.draw.radius)
+
+    def test_gameboard_drawing(self) -> None:
+        # Mock the 'draw_rectangle' function
+        with patch.object(self.draw, 'draw_rectangle') as mock_draw_rectangle:
+            # Mock the 'draw_circle' function
+            with patch.object(self.draw, 'draw_circle') as mock_draw_circle:
+                # Mock the 'pygame.display.update' function
+                with patch('pygame.display.update') as mock_update:
+                    # Mock the occupant status of the spots on the board
+                    self.mock_board.get_player_at_spot = Mock(return_value=None)
+
+                    # call the 'draw.gameboard' function to use for the
+                    # following tests
+                    self.draw.gameboard()
+
+                    # Check that 'draw_rectangle' was called the appropriate
+                    # number of times given the mocked board (10x10)
+                    self.assertEqual(mock_draw_rectangle.call_count, 100)
+
+                    # Check that 'draw_circle' was called the appropriate
+                    # number of times given the mocked board (10x10)
+                    self.assertEqual(mock_draw_circle.call_count, 100)
+
+                    # Check if any of the 'draw_circle' calls resulted in
+                    # an empty (black) circle
+                    empty_calls = [call for call in mock_draw_circle.call_args_list 
+                                if call[0][0] == self.draw.color.black]
+
+                    # Assert that the number of empty circles was greater than 0
+                    self.assertGreater(len(empty_calls), 0)
+
+                    # Check that the pygame display was updated
+                    mock_update.assert_called_once()
