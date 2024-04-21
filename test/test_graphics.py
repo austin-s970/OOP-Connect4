@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from hypothesis import given, settings, strategies, assume
 
 from graphics import Color, Draw
@@ -53,6 +53,7 @@ class TestColor(unittest.TestCase):
 class TestDraw(unittest.TestCase):
     def setUp(self):
         # Mocking the Board
+        self.window = None
         self.mock_board = Mock(spec=Board)
         self.mock_board.height = 10
         self.mock_board.width = 10
@@ -81,10 +82,54 @@ class TestDraw(unittest.TestCase):
         """
         self.assertIsInstance(self.draw.color, Color)
 
-    def test_radius_getter(self):
+    def test_radius_getter(self) -> None:
         """
         Test the getter method for
         the radius of the circles.
         """
         expected_radius = int(self.draw.square_size/2 - 5)
         self.assertEqual(self.draw.radius, expected_radius)
+    
+    @patch('pygame.draw.rect')
+    def test_rectangle(self, mock_draw_rectangle) -> None:
+        """
+        Test the function for drawing
+        rectangles.
+        """
+        # Create the expected rectangle parameters
+        expected_color = (255, 0 , 0) # Red
+        draw_height = 1
+        draw_width = 1
+
+        # Define the dimensions of the expected rectangle
+        expected_rectangle = (draw_width * self.draw.square_size,
+                              draw_height * self.draw.square_size,
+                              self.draw.square_size,
+                              self.draw.square_size)
+
+        # Call the method that is supposed to draw the rectangle
+        self.draw.draw_rectangle(draw_height, draw_width, expected_color)
+
+        # Assert that 'pygame.draw.rect' was called correctly
+        mock_draw_rectangle.assert_called_once_with(self.draw.window,
+                                                    expected_color, 
+                                                    expected_rectangle)
+
+    @patch('pygame.draw.circle')
+    def test_circle(self, mock_draw_circle) -> None:
+        """
+        Test the function for drawing
+        circles.
+        """
+        # Create the expected circle parameters
+        expected_color = (0, 0, 255)  # Blue
+        expected_center = (100, 100)
+
+        # Call the method that is supposed to draw the circle
+        self.draw.draw_circle(expected_color, expected_center)
+
+        # Assert that pygame.draw.circle was called correctly
+        mock_draw_circle.assert_called_once_with(self.draw.window,
+                                                 expected_color, 
+                                                 expected_center, 
+                                                 self.draw.radius)
