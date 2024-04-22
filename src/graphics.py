@@ -66,7 +66,8 @@ class Color():
             tuple[int, int, int]: a tuple representing the RGB value.
         """
         return self._black
-    
+
+
 class Shape(Screen):
     def __init__(self, board: Board) -> None:
         """
