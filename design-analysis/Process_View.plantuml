@@ -3,22 +3,16 @@ scale 2
 title "Process View"
 start
 
-if (Start Game?) then (yes)
-  :Start Game;
+:Start Game;
 
+repeat
   repeat
-    repeat
-      :Switch Player;
-      :Play Turn;
-    repeat while (Victory?) is (no)
-    ->yes;
-  repeat while (Play Again?) is (yes)
-  ->no;
-else (no)
-  :Quit;
-  stop
-
-endif
+    :Switch Player;
+    :Play Turn;
+  repeat while (Victory?) is (no)
+  ->yes;
+repeat while (Play Again?) is (yes)
+->no;
 
 stop
 @enduml
