@@ -8,7 +8,7 @@ import pygame
 import sys
 import math
 
-from graphics import Color, Draw
+from graphics import Color, Shape, Draw
 from board import Screen, Board, FullError
 from interface import Interface
 
@@ -25,6 +25,7 @@ class Game():
         self._board: Board = Board()
         self._screen: Screen = Screen(self._board.height, self._board.width)
         self._color: Color = Color()
+        self._shape: Shape = Shape(self._board)
         self._draw: Draw = Draw(self._board)
 
     @property
@@ -56,6 +57,16 @@ class Game():
             Color: an instance of the 'Color' class.
         """
         return self._color
+
+    @property
+    def shape(self) -> Shape:
+        """
+        getter property for shapes
+
+        Returns:
+            Shape: an instance of the 'Shape' class.
+        """
+        return self._shape
 
     @property
     def draw(self) -> Draw:
@@ -200,16 +211,16 @@ class Game():
             # If it's player 1's turn,
             # the circle will be red
             color = self.color.red
-            self.draw.draw_circle(color,
-                                  (posx,
-                                   int(self.draw.square_size/2)))
+            self.shape.circle(color,
+                              (posx,
+                               int(self.draw.square_size/2)))
         else:
             # If it's player 2's turn,
             # the circle will be yellow
             color = self.color.yellow
-            self.draw.draw_circle(color,
-                                  (posx,
-                                   int(self.draw.square_size/2)))
+            self.shape.circle(color,
+                              (posx,
+                               int(self.draw.square_size/2)))
 
     def handle_mouse_click(self, event_pos: list[float]) -> Optional[int]:
         # If a player has placed a piece...

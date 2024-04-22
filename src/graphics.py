@@ -66,6 +66,47 @@ class Color():
             tuple[int, int, int]: a tuple representing the RGB value.
         """
         return self._black
+    
+class Shape(Screen):
+    def __init__(self, board: Board) -> None:
+        """
+        Constructor for 'Shape'.
+        """
+        super().__init__(board.height, board.width)
+        self._spot = Spot()
+        self._color = Color()
+        self._radius = int(self.square_size/2 - 5)
+
+    @property
+    def radius(self) -> int:
+        """
+        getter property for the radius
+
+        Returns:
+            int: the integer representing the radius.
+        """
+        return self._radius
+
+    def rectangle(self,
+                  draw_height: int,
+                  draw_width: int,
+                  color: tuple[int, int, int]) -> None:
+        """
+        Given height, width, and a color, draw a rectangle.
+        """
+        pygame.draw.rect(self.window, color,
+                         (draw_width * self.square_size, draw_height *
+                          self.square_size, self.square_size,
+                          self.square_size))
+
+    def circle(self, color: tuple[int, int, int],
+               center: tuple[int, int]) -> None:
+        """
+        Given a color and a center coordinate, draw a circle.
+        """
+        pygame.draw.circle(self.window,
+                           color, center,
+                           self.radius)
 
 
 class Draw(Screen):
@@ -77,7 +118,7 @@ class Draw(Screen):
         self._board = board
         self._spot = Spot()
         self._color = Color()
-        self._radius = int(self.square_size/2 - 5)
+        self._shape = Shape(board)
 
     @property
     def board(self) -> Board:
@@ -110,35 +151,14 @@ class Draw(Screen):
         return self._color
 
     @property
-    def radius(self) -> int:
+    def shape(self) -> Shape:
         """
-        getter property for the radius
+        getter property for shapes
 
         Returns:
-            int: the integer representing the radius.
+            Shape: an instance of the 'Shape' class.
         """
-        return self._radius
-
-    def draw_rectangle(self,
-                       draw_height: int,
-                       draw_width: int,
-                       color: tuple[int, int, int]) -> None:
-        """
-        Given height, width, and a color, draw a rectangle.
-        """
-        pygame.draw.rect(self.window, color,
-                         (draw_width * self.square_size, draw_height *
-                          self.square_size, self.square_size,
-                          self.square_size))
-
-    def draw_circle(self, color: tuple[int, int, int],
-                    center: tuple[int, int]) -> None:
-        """
-        Given a color and a center coordinate, draw a circle.
-        """
-        pygame.draw.circle(self.window,
-                           color, center,
-                           self.radius)
+        return self._shape
 
     def gameboard(self) -> None:
         """
@@ -162,7 +182,7 @@ class Draw(Screen):
 
                 draw_height = gameboard.height - r
 
-                self.draw_rectangle(draw_height, c, blue)
+                self.shape.rectangle(draw_height, c, blue)
 
                 occupant = gameboard.get_player_at_spot(c, r)
 
@@ -173,10 +193,10 @@ class Draw(Screen):
                               self.square_size / 2))
 
                 if occupant == 1:
-                    self.draw_circle(red, center)
+                    self.shape.circle(red, center)
                 elif occupant == 2:
-                    self.draw_circle(yellow, center)
+                    self.shape.circle(yellow, center)
                 else:
-                    self.draw_circle(black, center)
+                    self.shape.circle(black, center)
 
         pygame.display.update()
