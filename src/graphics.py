@@ -7,75 +7,78 @@ from board import Screen, Board, Spot
 
 
 class Color():
-    def __init__(self) -> None:
-        """
-        Constructor for 'Color'.
-        """
-        self._red = (255, 0, 0)
-        self._blue = (0, 0, 255)
-        self._yellow = (255, 255, 0)
-        self._lightblue = (0, 255, 255)
-        self._black = (0, 0, 0)
+    def get_color(self) -> tuple[int, int, int]:
+        raise NotImplementedError
 
-    @property
-    def red(self) -> tuple[int, int , int]:
+
+class Red(Color):
+    def get_color(self) -> tuple[int, int , int]:
         """
         getter property for the color 'red'
 
         Returns:
             tuple[int, int, int]: a tuple representing the RGB value.
         """
-        return self._red
+        red = (255, 0, 0)
+        return red
 
-    @property
-    def blue(self) -> tuple[int, int , int]:
+
+class Blue(Color):
+    def get_color(self) -> tuple[int, int , int]:
         """
         getter property for the color 'blue'
 
         Returns:
             tuple[int, int, int]: a tuple representing the RGB value.
         """
-        return self._blue
+        blue = (0, 0, 255)
+        return blue
 
-    @property
-    def yellow(self) -> tuple[int, int , int]:
+
+class Yellow(Color):
+    def get_color(self) -> tuple[int, int , int]:
         """
         getter property for the color 'yellow'
 
         Returns:
             tuple[int, int, int]: a tuple representing the RGB value.
         """
-        return self._yellow
+        yellow = (255, 255, 0)
+        return yellow
 
-    @property
-    def lightblue(self) -> tuple[int, int , int]:
-        """
-        getter property for the color 'lightblue'
 
-        Returns:
-            tuple[int, int, int]: a tuple representing the RGB value.
-        """
-        return self._lightblue
-
-    @property
-    def black(self) -> tuple[int, int , int]:
+class Black(Color):
+    def get_color(self) -> tuple[int, int , int]:
         """
         getter property for the color 'black'
 
         Returns:
             tuple[int, int, int]: a tuple representing the RGB value.
         """
-        return self._black
+        black = (0, 0, 0)
+        return black
+
+
+class LightBlue(Color):
+    def get_color(self) -> tuple[int, int , int]:
+        """
+        getter property for the color 'lightblue'
+
+        Returns:
+            tuple[int, int, int]: a tuple representing the RGB value.
+        """
+        lightblue = (0, 255, 255)
+        return lightblue
 
 
 class Shape(Screen):
-    def __init__(self, board: Board) -> None:
+    def __init__(self, color: Color, board: Board) -> None:
         """
         Constructor for 'Shape'.
         """
-        super().__init__(board.height, board.width)
-        self._spot = Spot()
-        self._color = Color()
+        super().__init__(board.rows, board.cols)
+        self._color = color
+        self._board = board
         self._radius = int(self.square_size/2 - 5)
 
     @property
@@ -88,26 +91,34 @@ class Shape(Screen):
         """
         return self._radius
 
-    def rectangle(self,
-                  draw_height: int,
-                  draw_width: int,
-                  color: tuple[int, int, int]) -> None:
-        """
-        Given height, width, and a color, draw a rectangle.
-        """
-        pygame.draw.rect(self.window, color,
-                         (draw_width * self.square_size, draw_height *
-                          self.square_size, self.square_size,
-                          self.square_size))
+    def draw(self, window):
+        raise NotImplementedError("This method should be overridden by subclasses")
 
-    def circle(self, color: tuple[int, int, int],
-               center: tuple[int, int]) -> None:
+
+class Rectangle(Shape):
+    def __init__(self, color: Color, board: Board):
+        super().__init__(color, board)
+
+    def draw(self, window, draw_height: int, draw_width: int):
         """
-        Given a color and a center coordinate, draw a circle.
+        Draw a rectangle at the given position with the color of this shape.
         """
-        pygame.draw.circle(self.window,
-                           color, center,
-                           self.radius)
+        color = self._color.get_color()  # Use get_color from the color instance
+        pygame.draw.rect(window, color,
+                         (draw_width * self.square_size, draw_height * self.square_size,
+                          self.square_size, self.square_size))
+
+
+class Circle(Shape):
+    def __init__(self, color: Color, board: Board):
+        super().__init__(color, board)
+
+    def draw(self, window, center: tuple[int, int]):
+        """
+        Draw a circle at the given center with the color of this shape.
+        """
+        color = self._color.get_color()  # Use get_color from the color instance
+        pygame.draw.circle(window, color, center, self.radius)
 
 
 class Draw(Screen):
@@ -117,9 +128,10 @@ class Draw(Screen):
         """
         super().__init__(board.height, board.width)
         self._board = board
-        self._spot = Spot()
-        self._color = Color()
-        self._shape = Shape(board)
+        self._red = Red()
+        self._blue = Blue()
+        self._yellow = Yellow()
+        self._black = Black()
 
     @property
     def board(self) -> Board:
@@ -132,34 +144,44 @@ class Draw(Screen):
         return self._board
 
     @property
-    def spot(self) -> Spot:
+    def red(self) -> Red:
         """
-        getter property for a spot on the board
+        getter property for the color 'Red'
 
         Returns:
-            Spot: an instance of the 'Spot' class.
+            Red: an instance of the 'Red' subclass.
         """
-        return self._spot
+        return self._red
 
     @property
-    def color(self) -> Color:
+    def blue(self) -> Blue:
         """
-        getter property for a color
+        getter property for the color 'Blue'
 
         Returns:
-            Color: an instance of the 'Color' class.
+            Blue: an instance of the 'Blue' subclass.
         """
-        return self._color
+        return self._blue
 
     @property
-    def shape(self) -> Shape:
+    def yellow(self) -> Yellow:
         """
-        getter property for shapes
+        getter property for the color 'Yellow'
 
         Returns:
-            Shape: an instance of the 'Shape' class.
+            Yellow: an instance of the 'Yellow' subclass.
         """
-        return self._shape
+        return self._yellow
+    
+    @property
+    def black(self) -> Black:
+        """
+        getter property for the color 'Black'
+
+        Returns:
+            Black: an instance of the 'Black' subclass.
+        """
+        return self._black
 
     def gameboard(self) -> None:
         """
@@ -169,13 +191,6 @@ class Draw(Screen):
         # Define the colors to be used for the board
         # and pieces.
 
-        hue = self.color
-
-        red = hue.red
-        blue = hue.blue
-        yellow = hue.yellow
-        black = hue.black
-
         gameboard = self.board
 
         for c in range(gameboard.width):
@@ -183,7 +198,8 @@ class Draw(Screen):
 
                 draw_height = gameboard.height - r
 
-                self.shape.rectangle(draw_height, c, blue)
+                rectangle = Rectangle(self.blue, gameboard)
+                rectangle.draw(self.window, draw_height, c)
 
                 occupant = gameboard.get_player_at_spot(c, r)
 
@@ -194,10 +210,13 @@ class Draw(Screen):
                               self.square_size / 2))
 
                 if occupant == 1:
-                    self.shape.circle(red, center)
+                    circle = Circle(self.red, gameboard)
+                    circle.draw(self.window, center)
                 elif occupant == 2:
-                    self.shape.circle(yellow, center)
+                    circle = Circle(self.yellow, gameboard)
+                    circle.draw(self.window, center)  
                 else:
-                    self.shape.circle(black, center)
+                    circle = Circle(self.black, gameboard)
+                    circle.draw(self.window, center)
 
         pygame.display.update()

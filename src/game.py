@@ -9,6 +9,8 @@ import sys
 import math
 
 from graphics import Color, Shape, Draw
+from graphics import Red, Blue, Yellow, Black, LightBlue
+from graphics import Rectangle, Circle
 from board import Screen, Board, FullError
 from interface import Interface
 
@@ -24,8 +26,11 @@ class Game():
         self.inter: Interface = Interface()
         self._board: Board = Board()
         self._screen: Screen = Screen(self._board.height, self._board.width)
-        self._color: Color = Color()
-        self._shape: Shape = Shape(self._board)
+        self._red: Red = Red()
+        self._blue: Blue = Blue()
+        self._yellow: Yellow = Yellow()
+        self._black: Black = Black()
+        self._lightblue: LightBlue = LightBlue()
         self._draw: Draw = Draw(self._board)
 
     @property
@@ -49,26 +54,6 @@ class Game():
         return self._board
 
     @property
-    def color(self) -> Color:
-        """
-        getter property for a color
-
-        Returns:
-            Color: an instance of the 'Color' class.
-        """
-        return self._color
-
-    @property
-    def shape(self) -> Shape:
-        """
-        getter property for shapes
-
-        Returns:
-            Shape: an instance of the 'Shape' class.
-        """
-        return self._shape
-
-    @property
     def draw(self) -> Draw:
         """
         getter property for drawing functionality.
@@ -85,11 +70,11 @@ class Game():
         font = pygame.font.SysFont("monospace", 75)
         message: str = "Player " + str(player) + " wins!"
         if player == 1:
-            color = self.color.red
+            color = self._red.get_color()
             label = font.render(message, 1, color)
             self.screen.window.blit(label, (40, 10))
         else:
-            color = self.color.yellow
+            color = self._yellow.get_color()
             label = font.render(message, 1, color)
             self.screen.window.blit(label, (40, 10))
         print(message)
@@ -100,7 +85,7 @@ class Game():
         """
         font = pygame.font.SysFont("monospace", 75)
         message: str = "Tie Game!"
-        color = self.color.blue
+        color = self._blue.get_color()
         label = font.render(message, 1, color)
         self.screen.window.blit(label, (160, 10))
         print(message)
@@ -111,7 +96,7 @@ class Game():
         if the player wants to play again
         """
         # Clear the top of the screen
-        color = self.color.black
+        color = self._black.get_color()
         pygame.draw.rect(self.screen.window,
                          color,
                          (0, 0, self.screen.window_width,
@@ -119,11 +104,11 @@ class Game():
 
         font = pygame.font.SysFont("monospace", 22)
         message: str = "Click anywhere to play again, or press Esc to quit."
-        color = self.color.lightblue
+        color = self._lightblue.get_color()
         label = font.render(message, 1, color)
         self.screen.window.blit(label, (20, 5))
 
-    def _replay(self, event: pygame.event.EventType) -> bool:
+    def _end_game(self, event: pygame.event.EventType) -> bool:
         """
         function to determine if the player wishes to play
         again or not. Returns true if so, false if not.
@@ -135,17 +120,26 @@ class Game():
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    return True  # Return True immediately on mouse click
+                    self.reset_game()
+                    return False
 
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        return False
+                        return True
 
                 elif event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-
-            pygame.time.delay(100)
+    
+    def reset_game(self) -> None:
+        """
+        Resets the game board and relevant game state variables to start a new game.
+        """
+        self.board.reset()  # Reset the board to an empty state
+        self.inter._turn_count = 0  # Reset the turn count
+        self.inter._player_turn = 1  # Start with player 1
+        self.draw.gameboard()  # Redraw the empty board for a new game
+        pygame.display.update()  # Update the display to show the reset board
 
     def game_loop(self) -> None:
         """
@@ -171,92 +165,47 @@ class Game():
                 if event.type == pygame.MOUSEBUTTONDOWN and not wait_time:
                     wait_time = self.handle_mouse_click(event.pos)
 
-            if wait_time:
-                # If the game has been won, check how long it's been
-                if pygame.time.get_ticks() - wait_time > 3000:
-                    # If 3 seconds have passed, end the game
-                    # and ask if the player wants to replay
-
-                    replay = self._replay(event)
-
-                    # if response is false, close the game
-                    if replay is False:
-                        game_over = True
-                    else:
-                        self.board.reset()  # Reset the board
-                        self.draw.gameboard()  # Redraw the empty board
-
-                        game_over = False  # Allow the gameloop to continue
-
-                        # reset turn variables
-                        self.inter._turn_count = 0
-                        self.inter._player_turn = 1
-
-                        # start a new game
-                        self.game_loop()
-                else:
-                    pygame.display.update()
-
+            pygame.display.update()
             clock.tick(60)  # Keep the game loop running smoothly
+
+            game_over = self._end_game()
 
     def handle_mouse_motion(self, screen: pygame.Surface,
                             event_pos: list[int]) -> None:
         # If the mouse is moving, update the location of
         # the hovering piece
-        color = self.color.black
-        screen.fill(color)
+        rect = pygame.Rect(0, 0, self.screen.window_width, self.screen.square_size)
+        screen.fill(self._black.get_color(), rect)
         self.draw.gameboard()
         posx = event_pos[0]
+        center = (posx, int(self.screen.square_size / 2))
+
         if self.inter._player_turn == 1:
             # If it's player 1's turn,
             # the circle will be red
-            color = self.color.red
-            self.shape.circle(color,
-                              (posx,
-                               int(self.draw.square_size/2)))
+            circle = Circle(self.draw.red, self.board)
         else:
             # If it's player 2's turn,
             # the circle will be yellow
-            color = self.color.yellow
-            self.shape.circle(color,
-                              (posx,
-                               int(self.draw.square_size/2)))
+            circle = Circle(self.draw.yellow, self.board)
+        circle.draw(self.screen.window, center)
 
-    def handle_mouse_click(self, event_pos: list[float]) -> Optional[int]:
-        # If a player has placed a piece...
-
-        # Clear the top of the screen
-        color = self.color.black
-        pygame.draw.rect(self.screen.window,
-                         color,
-                         (0, 0, self.screen.window_width,
-                          self.screen.square_size))
+    def handle_mouse_click(self, event_pos: list[float]) -> None:
+        # Try to place a piece and redraw only if successful
+        posx = event_pos[0]
+        column = int(math.floor(posx/self.screen.square_size))
         try:
-            posx = event_pos[0]
-            column = int(math.floor(posx/self.screen.square_size))
-            # Drop a piece that matches the color of the player
-            self.board.drop_piece(column, self.inter._player_turn)
-
-            # Update the state of the board
-            self.draw.gameboard()
-            pygame.display.update()
-            self.inter._increment_turn()
-            if (self.board.has_won(self.inter._player_turn)):
-                # Check for the winning condition
-                self._print_winner_message(self.inter._player_turn)
-                return pygame.time.get_ticks()
-            elif self.inter._turn_count == 42:
-                # Tie game
-                self._print_tie_message()
-                return pygame.time.get_ticks()
-            else:
-                self.inter._switch_player()
-        except ValueError:
-            print("Please enter a valid column on the game board.")
+            if self.board.drop_piece(column, self.inter._player_turn):  # Ensure drop_piece returns a boolean
+                self.inter._increment_turn()
+                self.draw.gameboard()  # Draw new board state
+                if self.board.has_won(self.inter._player_turn):
+                    self._print_winner_message(self.inter._player_turn)
+                    pygame.time.wait(3000)  # Delay to show message
+                elif self.inter._turn_count == 42:
+                    self._print_tie_message()
+                    pygame.time.wait(3000)
         except FullError:
             print("That column is already full!")
-        except EOFError:
-            return None
         except KeyboardInterrupt:
             return None
         return None
