@@ -4,6 +4,7 @@ Module to manage the graphics.
 
 import pygame
 from board import Screen, Board, Spot
+from typing import Any
 
 
 class MultiError(Exception):
@@ -86,7 +87,7 @@ class DrawMeta(type):
     ensures that no more than one
     instance of 'Draw' exists.
     """
-    _instances = {}  # Attribute to store the singleton instance
+    _instances: dict = {}  # Attribute to store the singleton instance
 
     def __call__(cls, *args, **kwargs):
         """
@@ -110,7 +111,7 @@ class Draw(metaclass=DrawMeta):
         """
         Constructor for 'Draw'.
         """
-        if hasattr(self, '__initialized') and self.__initialized:
+        if hasattr(self, '__initialized') and bool(self.__initialized):
             return
         self._screen = Screen(board.height, board.width)
         self._board = board
@@ -123,7 +124,7 @@ class Draw(metaclass=DrawMeta):
         self.__initialized = True
 
     @property
-    def screen(self) -> Board:
+    def screen(self) -> Screen:
         """
         getter property for the screen
 
