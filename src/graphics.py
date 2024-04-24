@@ -83,7 +83,7 @@ class Color():
         return self._black
 
 
-class DrawMeta(type, Generic[T]):
+class DrawMeta(type):
     """
     Meta-class for 'Draw'. This class
     ensures that no more than one
@@ -93,7 +93,7 @@ class DrawMeta(type, Generic[T]):
     # Attribute to store the singleton instance:
     _instances: Dict[Type[Any], Any] = {}
 
-    def __call__(cls: Type[T], *args: Any, **kwargs: Any) -> T:
+    def __call__(cls, *args: Any, **kwargs: Any):
         """
         Control the creation of new instances,
         ensuring that no more than one
