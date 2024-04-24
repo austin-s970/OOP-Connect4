@@ -1,9 +1,9 @@
 """
-Module to handle the input and player turns.
+Module to handle the player turns.
 """
 
 
-class Interface():
+class Turns():
     """
     interface class
     """
@@ -13,19 +13,6 @@ class Interface():
         """
         self._player_turn: int = 1
         self._turn_count: int = 0
-
-    def print_welcome(self) -> None:
-        """
-        function to print the welcome message for the game.
-        """
-        pass
-
-    def _print_turn_instructions(self) -> None:
-        """
-        function to print the turn instructions for the players.
-        """
-        print(f"""Its Player {self._player_turn}'s turn!
-              Please enter the column number to drop a piece.""")
 
     def _switch_player(self) -> None:
         """
@@ -55,23 +42,6 @@ class Interface():
             int: the integer for the turn count.
         """
         return self._turn_count
-
-    def _read_input(self) -> int:
-        """
-        function to read the input from the players
-
-        Returns:
-            int: the column that the player specified.
-        """
-        column: int
-        line: str = input()
-        while True:
-            try:
-                column = int(line)
-                break
-            except ValueError:
-                print("Please enter a valid column number.")
-        return column
 
     def _increment_turn(self) -> None:
         """
