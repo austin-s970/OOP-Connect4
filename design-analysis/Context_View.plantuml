@@ -1,0 +1,24 @@
+@startuml
+title Context View
+scale 2
+
+package "Connect 4 Game" {
+    usecase Game
+    usecase Board
+    usecase Graphics
+    usecase Interface
+
+    [Game] ..> [Board]
+    [Game] ..> [Graphics]
+    [Game] ..> [Interface]
+
+    [Graphics] ..> [Board]
+}
+
+actor Player
+component pygame
+
+[Game] <-- Player : interacts with
+[Graphics] --> pygame : uses
+
+@enduml

@@ -5,7 +5,7 @@ Module to handle the player turns.
 
 class Turns():
     """
-    interface class
+    turns class
     """
     def __init__(self) -> None:
         """
