@@ -4,7 +4,7 @@ Module to manage the graphics.
 
 import pygame
 from board import Screen, Board, Spot
-from typing import Type, TypeVar, Generic, Any
+from typing import Dict, Type, TypeVar, Generic, Any
 
 T = TypeVar('T')  # Initialize a type variable for 'DrawMeta'
 
@@ -91,7 +91,7 @@ class DrawMeta(type, Generic[T]):
     """
 
     # Attribute to store the singleton instance:
-    _instances: dict[Type[Any], Any] = {}
+    _instances: Dict[Type[Any], Any] = {}
 
     def __call__(cls: Type[T], *args: Any, **kwargs: Any) -> T:
         """
