@@ -6,6 +6,8 @@ import pygame
 from board import Screen, Board, Spot
 from typing import Type, TypeVar, Generic, Any
 
+T = TypeVar('T')  # Initialize a type variable for 'DrawMeta'
+
 
 class MultiError(Exception):
     """
@@ -90,8 +92,6 @@ class DrawMeta(type, Generic[T]):
 
     # Attribute to store the singleton instance:
     _instances: dict[Type[Any], Any] = {}
-
-    T = TypeVar('T')  # Initialize a type variable for mypy
 
     def __call__(cls: Type[T], *args: Any, **kwargs: Any) -> T:
         """
