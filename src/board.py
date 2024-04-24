@@ -5,6 +5,10 @@ from typing import Optional
 
 
 class FullError(Exception):
+    """
+    Custom exception to handle
+    the case that the board is full.
+    """
     pass
 
 

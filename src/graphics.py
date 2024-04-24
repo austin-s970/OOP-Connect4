@@ -4,9 +4,22 @@ Module to manage the graphics.
 
 import pygame
 from board import Screen, Board, Spot
+from typing import Dict, Any
+
+
+class MultiError(Exception):
+    """
+    Custom exception to handle
+    the case that multiple instances
+    of 'Draw' exist.
+    """
+    pass
 
 
 class Color():
+    """
+    Class controlling the colors.
+    """
     def __init__(self) -> None:
         """
         Constructor for 'Color'.
@@ -68,16 +81,61 @@ class Color():
         return self._black
 
 
-class Draw(Screen):
+class DrawMeta(type):
+    """
+    Meta-class for 'Draw'. This class
+    ensures that no more than one
+    instance of 'Draw' exists.
+    """
+
+    # Attribute to store the singleton instance:
+    _instances: Dict[Any, Any] = {}
+
+    def __call__(cls: Any, *args: Any, **kwargs: Any) -> Any:
+        """
+        Control the creation of new instances,
+        ensuring that no more than one
+        instance exists.
+        """
+        if cls not in cls._instances:
+            instance = super().__call__(*args, **kwargs)
+            cls._instances[cls] = instance
+
+        return cls._instances[cls]
+
+
+class Draw(metaclass=DrawMeta):
+    """
+    Class that draws the graphics of
+    the game.
+    """
+    __initialized: bool = False
+
     def __init__(self, board: Board) -> None:
         """
         Constructor for 'Draw'.
         """
-        super().__init__(board.height, board.width)
+        if self.__initialized:
+            return
+        self._screen = Screen(board.height, board.width)
         self._board = board
         self._spot = Spot()
         self._color = Color()
-        self._radius = int(self.square_size/2 - 5)
+        self._radius = int(self.screen.square_size/2 - 5)
+
+        # set a variable, '__initialized' to True
+        # This prevents re-initialization:
+        self.__initialized = True
+
+    @property
+    def screen(self) -> Screen:
+        """
+        getter property for the screen
+
+        Returns:
+            Screen: an instance of the 'Screen' class.
+        """
+        return self._screen
 
     @property
     def board(self) -> Board:
@@ -126,17 +184,17 @@ class Draw(Screen):
         """
         Given height, width, and a color, draw a rectangle.
         """
-        pygame.draw.rect(self.window, color,
-                         (draw_width * self.square_size, draw_height *
-                          self.square_size, self.square_size,
-                          self.square_size))
+        pygame.draw.rect(self.screen.window, color,
+                         (draw_width * self.screen.square_size, draw_height *
+                          self.screen.square_size, self.screen.square_size,
+                          self.screen.square_size))
 
     def draw_circle(self, color: tuple[int, int, int],
                     center: tuple[int, int]) -> None:
         """
         Given a color and a center coordinate, draw a circle.
         """
-        pygame.draw.circle(self.window,
+        pygame.draw.circle(self.screen.window,
                            color, center,
                            self.radius)
 
@@ -166,11 +224,11 @@ class Draw(Screen):
 
                 occupant = gameboard.get_player_at_spot(c, r)
 
-                center = (int(c * self.square_size +
-                              self.square_size / 2),
+                center = (int(c * self.screen.square_size +
+                              self.screen.square_size / 2),
                           int(draw_height *
-                              self.square_size +
-                              self.square_size / 2))
+                              self.screen.square_size +
+                              self.screen.square_size / 2))
 
                 if occupant == 1:
                     self.draw_circle(red, center)

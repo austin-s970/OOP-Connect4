@@ -8,7 +8,7 @@ import pygame
 import sys
 import math
 
-from graphics import Color, Draw
+from graphics import Color, Draw, MultiError
 from board import Screen, Board, FullError
 from turns import Turns
 
@@ -26,6 +26,13 @@ class Game():
         self._screen: Screen = Screen(self._board.height, self._board.width)
         self._color: Color = Color()
         self._draw: Draw = Draw(self._board)
+        self._draw2: Draw = Draw(self._board)
+
+        # Verify that 'Draw' is a singleton class
+        if id(self._draw) != id(self._draw2):
+            raise MultiError
+        else:
+            pass
 
     @property
     def screen(self) -> Screen:
@@ -202,14 +209,14 @@ class Game():
             color = self.color.red
             self.draw.draw_circle(color,
                                   (posx,
-                                   int(self.draw.square_size/2)))
+                                   int(self.draw.screen.square_size/2)))
         else:
             # If it's player 2's turn,
             # the circle will be yellow
             color = self.color.yellow
             self.draw.draw_circle(color,
                                   (posx,
-                                   int(self.draw.square_size/2)))
+                                   int(self.draw.screen.square_size/2)))
 
     def handle_mouse_click(self, event_pos: list[float]) -> Optional[int]:
         # If a player has placed a piece...
