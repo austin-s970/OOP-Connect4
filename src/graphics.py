@@ -117,8 +117,10 @@ class Draw(metaclass=DrawMeta):
         self._spot = Spot()
         self._color = Color()
         self._radius = int(self.screen.square_size/2 - 5)
-        self.__initialized = True # set a variable, '__initialized' to True
-                                  # This prevents re-initialization
+
+        # set a variable, '__initialized' to True
+        # This prevents re-initialization:
+        self.__initialized = True
 
     @property
     def screen(self) -> Board:
