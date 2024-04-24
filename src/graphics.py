@@ -4,9 +4,7 @@ Module to manage the graphics.
 
 import pygame
 from board import Screen, Board, Spot
-from typing import Dict, Type, TypeVar, Any
-
-T = TypeVar('T')  # Initialize a type variable for 'DrawMeta'
+from typing import Dict, Any
 
 
 class MultiError(Exception):
@@ -91,9 +89,9 @@ class DrawMeta(type):
     """
 
     # Attribute to store the singleton instance:
-    _instances: Dict[Type[Any], Any] = {}
+    _instances: Dict[Any, Any] = {}
 
-    def __call__(cls: Type[T], *args: Any, **kwargs: Any) -> T:
+    def __call__(cls: Any, *args: Any, **kwargs: Any) -> Any:
         """
         Control the creation of new instances,
         ensuring that no more than one
