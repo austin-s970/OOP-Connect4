@@ -103,7 +103,7 @@ class DrawMeta(type):
             instance = super().__call__(*args, **kwargs)
             cls._instances[cls] = instance
 
-        return T(cls._instances[cls])
+        return cls._instances[cls]
 
 
 class Draw(metaclass=DrawMeta):
