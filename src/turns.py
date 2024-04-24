@@ -1,5 +1,5 @@
 """
-Module to handle the player turns
+Module to handle the player turns.
 """
 
 
