@@ -4,7 +4,6 @@ Module to manage the graphics.
 
 import pygame
 from board import Screen, Board, Spot
-from typing import Any
 
 
 class MultiError(Exception):
