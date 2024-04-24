@@ -1,0 +1,14 @@
+@startuml
+scale 2
+title "Spot Class Diagram"
+class Spot {
+    +_piece: Optional[Piece]
+
+    +__init__() : None
+    +piece() : Optional[Piece]
+    +is_empty() : bool
+    +add_piece() : None
+    +is_player() : bool
+    +player_number() : int
+}
+@enduml

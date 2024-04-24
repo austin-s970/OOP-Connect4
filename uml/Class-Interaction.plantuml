@@ -1,0 +1,49 @@
+@startuml
+scale 2
+title "Connect 4 Class Interaction Diagram"
+class Game {
+}
+
+class Turns {
+}
+
+class Screen {
+}
+
+class Piece {
+}
+
+class Spot {
+}
+
+class Board {
+}
+
+class Color {
+}
+
+class DrawMeta {
+}
+
+class Draw {
+}
+
+Game --> Turns : uses
+Game --> Board : uses
+Game --> Screen : uses
+Game --> Color : uses
+Game --> Draw : uses
+
+Board --> Screen : inherits
+Board --> Piece : uses
+Board --> Spot : uses
+
+Spot --> Piece : uses
+
+DrawMeta --> Draw : meta
+
+Draw --> Board : uses
+Draw --> Screen : uses
+Draw --> Spot : uses
+Draw --> Color : uses
+@enduml

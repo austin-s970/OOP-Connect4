@@ -21,7 +21,7 @@ class Game():
         """
         constructor
         """
-        self.turn: Turns = Turns()
+        self._turn: Turns = Turns()
         self._board: Board = Board()
         self._screen: Screen = Screen(self._board.height, self._board.width)
         self._color: Color = Color()
@@ -35,14 +35,14 @@ class Game():
             pass
 
     @property
-    def screen(self) -> Screen:
+    def turn(self) -> Turns:
         """
-        getter property for the screen
+        getter property for the board
 
         Returns:
-            Screen: an instance of the 'Screen' class.
+            Board: an instance of the 'Board' class.
         """
-        return self._screen
+        return self._turn
 
     @property
     def board(self) -> Board:
@@ -53,6 +53,16 @@ class Game():
             Board: an instance of the 'Board' class.
         """
         return self._board
+
+    @property
+    def screen(self) -> Screen:
+        """
+        getter property for the screen
+
+        Returns:
+            Screen: an instance of the 'Screen' class.
+        """
+        return self._screen
 
     @property
     def color(self) -> Color:
@@ -143,58 +153,6 @@ class Game():
 
             pygame.time.delay(100)
 
-    def game_loop(self) -> None:
-        """
-        function to run the game loop.
-        """
-        pygame.init()
-        screen = self.screen.window
-        self.draw.gameboard()
-        pygame.display.update()
-        clock = pygame.time.Clock()
-        game_over = False
-        wait_time = None
-
-        while not game_over:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-
-                if event.type == pygame.MOUSEMOTION and not wait_time:
-                    self.handle_mouse_motion(screen, event.pos)
-                pygame.display.update()
-
-                if event.type == pygame.MOUSEBUTTONDOWN and not wait_time:
-                    wait_time = self.handle_mouse_click(event.pos)
-
-            if wait_time:
-                # If the game has been won, check how long it's been
-                if pygame.time.get_ticks() - wait_time > 3000:
-                    # If 3 seconds have passed, end the game
-                    # and ask if the player wants to replay
-
-                    replay = self._replay(event)
-
-                    # if response is false, close the game
-                    if replay is False:
-                        game_over = True
-                    else:
-                        self.board.reset()  # Reset the board
-                        self.draw.gameboard()  # Redraw the empty board
-
-                        game_over = False  # Allow the gameloop to continue
-
-                        # reset turn variables
-                        self.turn._turn_count = 0
-                        self.turn._player_turn = 1
-
-                        # start a new game
-                        self.game_loop()
-                else:
-                    pygame.display.update()
-
-            clock.tick(60)  # Keep the game loop running smoothly
-
     def handle_mouse_motion(self, screen: pygame.Surface,
                             event_pos: list[int]) -> None:
         # If the mouse is moving, update the location of
@@ -256,3 +214,55 @@ class Game():
         except KeyboardInterrupt:
             return None
         return None
+
+    def game_loop(self) -> None:
+        """
+        function to run the game loop.
+        """
+        pygame.init()
+        screen = self.screen.window
+        self.draw.gameboard()
+        pygame.display.update()
+        clock = pygame.time.Clock()
+        game_over = False
+        wait_time = None
+
+        while not game_over:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+
+                if event.type == pygame.MOUSEMOTION and not wait_time:
+                    self.handle_mouse_motion(screen, event.pos)
+                pygame.display.update()
+
+                if event.type == pygame.MOUSEBUTTONDOWN and not wait_time:
+                    wait_time = self.handle_mouse_click(event.pos)
+
+            if wait_time:
+                # If the game has been won, check how long it's been
+                if pygame.time.get_ticks() - wait_time > 3000:
+                    # If 3 seconds have passed, end the game
+                    # and ask if the player wants to replay
+
+                    replay = self._replay(event)
+
+                    # if response is false, close the game
+                    if replay is False:
+                        game_over = True
+                    else:
+                        self.board.reset()  # Reset the board
+                        self.draw.gameboard()  # Redraw the empty board
+
+                        game_over = False  # Allow the gameloop to continue
+
+                        # reset turn variables
+                        self.turn._turn_count = 0
+                        self.turn._player_turn = 1
+
+                        # start a new game
+                        self.game_loop()
+                else:
+                    pygame.display.update()
+
+            clock.tick(60)  # Keep the game loop running smoothly

@@ -1,0 +1,10 @@
+@startuml
+scale 2
+title "Piece Class Diagram"
+class Piece {
+    +_player_number : int
+
+    +__init__(player_number: int) : None
+    +player_number() : int
+}
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+scale 2
+title "Draw Class Diagram"
+class Draw {
+    +__initialized : bool
+
+    +__init__(board: Board) : None
+    +_screen: Screen
+    +_board: Board
+    +_spot: Spot
+    +_color: Color
+    +_radius: int
+
+    +screen() : Screen
+    +board() : Board
+    +spot() : Spot
+    +color() : Color
+    +radius() : int
+    +draw_rectangle(draw_height: int, draw_width: int, color: tuple[int, int, int]) : None
+    +draw_circle(color: tuple[int, int, int], center: tuple[int, int]) : None
+    +gameboard(): None
+}
+@enduml
