@@ -91,7 +91,7 @@ class DrawMeta(type):
     def __call__(cls, *args, **kwargs):
         """
         Control the creation of new instances,
-        ensuring that no more than one 
+        ensuring that no more than one
         instance exists.
         """
         if cls not in cls._instances:
@@ -100,7 +100,8 @@ class DrawMeta(type):
 
         return cls._instances[cls]
 
-class Draw(metaclass = DrawMeta):
+
+class Draw(metaclass=DrawMeta):
     """
     Class that draws the graphics of
     the game.
@@ -116,7 +117,8 @@ class Draw(metaclass = DrawMeta):
         self._spot = Spot()
         self._color = Color()
         self._radius = int(self.screen.square_size/2 - 5)
-        self.__initialized = True
+        self.__initialized = True # set a variable, '__initialized' to True
+                                  # This prevents re-initialization
 
     @property
     def screen(self) -> Board:
