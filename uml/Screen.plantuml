@@ -1,0 +1,18 @@
+@startuml
+scale 2
+title "Screen Class Diagram"
+class Screen {
+    +__init__(rows: int, cols: int) : None
+    +_square_size : int
+    +_window_width : int
+    +_window_height : int
+    +_window_size : tuple[int, int]
+    +_window : pygame.Surface
+
+    +window() : pygame.Surface
+    +window_size() : tuple[int, int]
+    +square_size() : int
+    +window_width() : int
+    +window_height() : int
+}
+@enduml

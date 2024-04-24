@@ -1,0 +1,9 @@
+@startuml
+scale 2
+title "DrawMeta Class Diagram"
+class DrawMeta {
+    +_instances : dict[any, any]
+
+    +__call__(cls: Any, *args: Any, **kwargs: Any) : Any
+}
+@enduml
