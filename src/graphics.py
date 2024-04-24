@@ -88,7 +88,9 @@ class DrawMeta(type):
     instance of 'Draw' exists.
     """
     T = TypeVar('T') # Initialize a type variable for mypy
-    _instances: dict[Type[T], T] = {}  # Attribute to store the singleton instance
+
+      # Attribute to store the singleton instance:
+    _instances: dict[Type[T], T] = {}
 
     def __call__(cls, *args, **kwargs) -> T:
         """
@@ -109,11 +111,12 @@ class Draw(metaclass=DrawMeta):
     the game.
     """
     __initialized: bool = False
+
     def __init__(self, board: Board) -> None:
         """
         Constructor for 'Draw'.
         """
-        if hasattr(self, '__initialized'):
+        if self.__initialized:
             return
         self._screen = Screen(board.height, board.width)
         self._board = board
