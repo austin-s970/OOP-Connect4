@@ -93,7 +93,7 @@ class DrawMeta(type):
     # Attribute to store the singleton instance:
     _instances: Dict[Type[Any], Any] = {}
 
-    def __call__(cls, *args: Any, **kwargs: Any):
+    def __call__(cls, *args: Any, **kwargs: Any) -> T:
         """
         Control the creation of new instances,
         ensuring that no more than one
