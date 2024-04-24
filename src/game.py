@@ -10,7 +10,7 @@ import math
 
 from graphics import Color, Draw
 from board import Screen, Board, FullError
-from interface import Interface
+from turns import Turns
 
 
 class Game():
@@ -21,7 +21,7 @@ class Game():
         """
         constructor
         """
-        self.inter: Interface = Interface()
+        self.turn: Turns = Turns()
         self._board: Board = Board()
         self._screen: Screen = Screen(self._board.height, self._board.width)
         self._color: Color = Color()
@@ -178,8 +178,8 @@ class Game():
                         game_over = False  # Allow the gameloop to continue
 
                         # reset turn variables
-                        self.inter._turn_count = 0
-                        self.inter._player_turn = 1
+                        self.turn._turn_count = 0
+                        self.turn._player_turn = 1
 
                         # start a new game
                         self.game_loop()
@@ -196,7 +196,7 @@ class Game():
         screen.fill(color)
         self.draw.gameboard()
         posx = event_pos[0]
-        if self.inter._player_turn == 1:
+        if self.turn._player_turn == 1:
             # If it's player 1's turn,
             # the circle will be red
             color = self.color.red
@@ -224,22 +224,22 @@ class Game():
             posx = event_pos[0]
             column = int(math.floor(posx/self.screen.square_size))
             # Drop a piece that matches the color of the player
-            self.board.drop_piece(column, self.inter._player_turn)
+            self.board.drop_piece(column, self.turn._player_turn)
 
             # Update the state of the board
             self.draw.gameboard()
             pygame.display.update()
-            self.inter._increment_turn()
-            if (self.board.has_won(self.inter._player_turn)):
+            self.turn._increment_turn()
+            if (self.board.has_won(self.turn._player_turn)):
                 # Check for the winning condition
-                self._print_winner_message(self.inter._player_turn)
+                self._print_winner_message(self.turn._player_turn)
                 return pygame.time.get_ticks()
-            elif self.inter._turn_count == 42:
+            elif self.turn._turn_count == 42:
                 # Tie game
                 self._print_tie_message()
                 return pygame.time.get_ticks()
             else:
-                self.inter._switch_player()
+                self.turn._switch_player()
         except ValueError:
             print("Please enter a valid column on the game board.")
         except FullError:

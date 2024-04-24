@@ -9,6 +9,7 @@ TEST = PYTHONPATH=$(src) python3 -m pytest
 TEST_ARGS = -s --verbose --color=yes --cov=$(src)
 TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports
 STYLE_CHECK = flake8
+SHOW_COV = PYTHONPATH=$(src) python3 -m pytest --cov=$(src) --cov-report term-missing
 
 
 .PHONY: all
@@ -33,6 +34,10 @@ test: run-test
 .PHONY: run-test
 run-test:
 	time $(TEST) $(TEST_ARGS) $(test_dir)
+
+.PHONY: show-cov
+show-cov:
+	$(SHOW_COV)
 
 .PHONY: docs
 docs: $(documentation_dir)/index.html
