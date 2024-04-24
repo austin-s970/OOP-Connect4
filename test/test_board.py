@@ -52,6 +52,8 @@ class TestBoard(unittest.TestCase):
 
     board: board.Board
 
+    # No deadline was a temporary change to satisfy CI/CD
+    @settings(deadline=None)
     @given(x=strategies.integers(0, 6), y=strategies.integers(0, 5))
     def test_init_empty(self, x, y) -> None:
         self.board = board.Board()

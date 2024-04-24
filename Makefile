@@ -60,8 +60,8 @@ endif
 	$(PLANTUML) design-analysis/Logical_View.plantuml
 	$(PLANTUML) design-analysis/Development_View.plantuml
 	$(PLANTUML) design-analysis/Physical_View.plantuml
-	$(PLANTUML) design-analysis/DesignAnalysis.plantuml
-	@echo "UML diagrams created and saved in uml folder"
+	$(PLANTUML) design-analysis/Context_View.plantuml
+	@echo "Design Analysis (4+1 View) UML diagrams created and saved in uml folder"
 
 .PHONY: clean
 clean:

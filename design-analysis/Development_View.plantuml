@@ -13,8 +13,7 @@ package "Connect 4 Game" {
 [Game Module] ..> [Interface Module] : uses
 [Game Module] ..> [Graphics Module] : uses
 
-[Board Module] ..> [Interface Module] : uses
-
 [Graphics Module] ..> [Board Module] : uses
+[Graphics Module] ..> [pygame] : uses
 
 @enduml
