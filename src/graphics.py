@@ -4,7 +4,9 @@ Module to manage the graphics.
 
 import pygame
 from board import Screen, Board, Spot
-from typing import Type, TypeVar
+from typing import Type, TypeVar, Generic
+
+T = TypeVar('T')  # Initialize a type variable for 'DrawMeta'
 
 
 class MultiError(Exception):
@@ -81,18 +83,17 @@ class Color():
         return self._black
 
 
-class DrawMeta(type):
+class DrawMeta(type, Generic[T]):
     """
     Meta-class for 'Draw'. This class
     ensures that no more than one
     instance of 'Draw' exists.
     """
-    T = TypeVar('T')  # Initialize a type variable for mypy
 
     # Attribute to store the singleton instance:
     _instances: dict[Type[T], T] = {}
 
-    def __call__(cls, *args, **kwargs) -> T:
+    def __call__(cls: Type[T], *args, **kwargs) -> T:
         """
         Control the creation of new instances,
         ensuring that no more than one
