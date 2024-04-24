@@ -87,9 +87,9 @@ class DrawMeta(type):
     ensures that no more than one
     instance of 'Draw' exists.
     """
-    T = TypeVar('T') # Initialize a type variable for mypy
+    T = TypeVar('T')  # Initialize a type variable for mypy
 
-      # Attribute to store the singleton instance:
+    # Attribute to store the singleton instance:
     _instances: dict[Type[T], T] = {}
 
     def __call__(cls, *args, **kwargs) -> T:
