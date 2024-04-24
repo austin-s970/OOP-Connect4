@@ -4,7 +4,7 @@ Module to manage the graphics.
 
 import pygame
 from board import Screen, Board, Spot
-from typing import Dict, Type, TypeVar, Generic, Any
+from typing import Dict, Type, TypeVar, Any
 
 T = TypeVar('T')  # Initialize a type variable for 'DrawMeta'
 
