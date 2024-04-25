@@ -157,26 +157,24 @@ class Draw(Screen):
 
         gameboard = self.board
 
-        for c in range(gameboard.width):
-            for r in range(gameboard.height):
+        for r, c, spot in gameboard:
+            draw_height = gameboard.height - r
 
-                draw_height = gameboard.height - r
+            self.draw_rectangle(draw_height, c, blue)
 
-                self.draw_rectangle(draw_height, c, blue)
+            occupant = spot.player_number()
 
-                occupant = gameboard.get_player_at_spot(c, r)
+            center = (int(c * self.square_size +
+                          self.square_size / 2),
+                      int(draw_height *
+                          self.square_size +
+                          self.square_size / 2))
 
-                center = (int(c * self.square_size +
-                              self.square_size / 2),
-                          int(draw_height *
-                              self.square_size +
-                              self.square_size / 2))
-
-                if occupant == 1:
-                    self.draw_circle(red, center)
-                elif occupant == 2:
-                    self.draw_circle(yellow, center)
-                else:
-                    self.draw_circle(black, center)
+            if occupant == 1:
+                self.draw_circle(red, center)
+            elif occupant == 2:
+                self.draw_circle(yellow, center)
+            else:
+                self.draw_circle(black, center)
 
         pygame.display.update()

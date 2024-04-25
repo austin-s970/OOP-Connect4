@@ -1,7 +1,7 @@
 """Module Containing Game Board and Piece classes."""
+from typing import Optional, Iterator
 
 import pygame
-from typing import Optional
 
 
 class FullError(Exception):
@@ -119,20 +119,31 @@ class Spot:
 
 
 class BoardIterator:
+    _x: int = 0
+    _y: int = 0
+
     _board: list[list[Spot]]
-    x: int
-    y: int
-
-    @property
-    def width(self) -> int:
-        return len(self._board[0])
-
-    @property
-    def height(self) -> int:
-        return len(self._board)
+    _width: int
+    _height: int
 
     def __init__(self, board: list[list[Spot]]) -> None:
-        pass
+        self._board = board
+        self._width = len(board[0])
+        self._height = len(board)
+
+    def __iter__(self) -> Iterator:
+        return self
+
+    def __next__(self) -> tuple[int, int, Spot]:
+        if self._x >= self._width:
+            self._x = 0
+            self._y += 1
+        if self._y >= self._height:
+            raise StopIteration
+        return_val: tuple[int, int, Spot] = (self._y, self._x,
+                                             self._board[self._y][self._x])
+        self._x += 1
+        return return_val
 
 
 class Board(Screen):
@@ -148,6 +159,9 @@ class Board(Screen):
         super().__init__(rows, cols)
         self._spot = Spot()
         self._board = [[Spot() for i in range(cols)] for j in range(rows)]
+
+    def __iter__(self) -> Iterator:
+        return BoardIterator(self._board)
 
     @property
     def spot(self) -> Spot:
