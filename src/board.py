@@ -247,24 +247,6 @@ class Board(Screen):
         else:
             raise FullError
 
-    def __str__(self) -> str:
-        """
-        String representation of self
-        """
-        return_val: str = ''
-        for y in range(self.height - 1, -1, -1):
-            for x in range(self.width):
-                player_num = self.get_player_at_spot(x, y)
-                if player_num == 1:
-                    return_val += 'X'
-                elif player_num == 2:
-                    return_val += 'O'
-                else:
-                    return_val += ' '
-            return_val += '\n'
-        return_val += ''.join([str(i + 1) for i in range(self.width)])
-        return return_val
-
     def is_player(self, x: int, y: int, player_number: int) -> bool:
         """
         Check if a player is in a specific location

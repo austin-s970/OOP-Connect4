@@ -3,7 +3,7 @@ from hypothesis import given, settings, strategies, assume
 from unittest.mock import Mock, patch
 import hypothesis.strategies as some
 
-from board import Board, Piece, Spot, FullError
+from board import Board, Piece, Spot, FullError, BoardIterator
 
 
 class TestPiece(unittest.TestCase):
@@ -185,3 +185,89 @@ class TestBoard(unittest.TestCase):
                 self.board.drop_piece(0, 1)
         except(FullError):
             pass
+
+    def test_iter(self) -> None:
+        """
+        function to test the __iter__ method
+        """
+        for i in self.board:
+            self.assertEqual(isinstance(i, tuple), True)
+
+    def test_is_player(self) -> None:
+        """
+        function to test the is_player method
+        """
+        self.board._board[0][0].add_piece(1)
+        self.assertEqual(self.board.is_player(0, 0, 1), True)
+
+    def test_diagonal_win(self) -> None:
+        """
+        function to test the diagonal win method
+        """
+        self.board.reset()
+        self.assertEqual(self.board._diagonal_win(1), False)
+        self.board._board[0][0].add_piece(1)
+        self.board._board[1][1].add_piece(1)
+        self.board._board[2][2].add_piece(1)
+        self.board._board[3][3].add_piece(1)
+        self.assertEqual(self.board._diagonal_win(1), True)
+        self.board.reset()
+        self.board._board[0][3].add_piece(1)
+        self.board._board[1][2].add_piece(1)
+        self.board._board[2][1].add_piece(1)
+        self.board._board[3][0].add_piece(1)
+        self.assertEqual(self.board._diagonal_win(1), True)
+
+    def test_has_won(self) -> None:
+        """
+        function to test the has won method
+        """
+        self.board.reset()
+        self.assertEqual(self.board.has_won(1), False)
+        self.board._board[0][0].add_piece(1)
+        self.board._board[1][0].add_piece(1)
+        self.board._board[2][0].add_piece(1)
+        self.board._board[3][0].add_piece(1)
+        self.assertEqual(self.board.has_won(1), True)
+        self.board.reset()
+        self.board._board[0][0].add_piece(1)
+        self.board._board[0][1].add_piece(1)
+        self.board._board[0][2].add_piece(1)
+        self.board._board[0][3].add_piece(1)
+        self.assertEqual(self.board.has_won(1), True)
+        self.board.reset()
+        self.board._board[0][0].add_piece(1)
+        self.board._board[0][1].add_piece(2)
+        self.board._board[0][2].add_piece(1)
+        self.board._board[0][3].add_piece(1)
+        self.assertEqual(self.board.has_won(1), False)
+        self.board.reset()
+        self.board._board[0][0].add_piece(1)
+        self.board._board[1][0].add_piece(2)
+        self.board._board[2][0].add_piece(1)
+        self.board._board[3][0].add_piece(1)
+        self.assertEqual(self.board.has_won(1), False)
+        self.board.reset()
+        self.board._board[0][3].add_piece(1)
+        self.board._board[1][2].add_piece(1)
+        self.board._board[2][1].add_piece(1)
+        self.board._board[3][0].add_piece(1)
+        self.assertEqual(self.board.has_won(1), True)
+        
+        
+    class TestBoardIter(unittest.TestCase):
+        def setUp(self):
+            self.boarditer: BoardIterator = BoardIterator
+
+        def test_iter(self) -> None:
+            """
+            function to test the __iter__ method
+            """
+            for i in self.boarditer:
+                self.assertEqual(isinstance(i, tuple), True)
+                first_int: int = i[0]
+                second_int: int = i[1]
+                spot: Spot = i[2]
+                self.assertEqual(isinstance(first_int, int), True)
+                self.assertEqual(isinstance(second_int, int), True)
+                self.assertEqual(isinstance(spot, Spot), True)
