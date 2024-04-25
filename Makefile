@@ -6,7 +6,7 @@ test_dir = test/
 documentation_dir = docs/
 
 TEST = PYTHONPATH=$(src) python3 -m pytest
-TEST_ARGS = -s --verbose --color=yes --cov=$(src) --durations=2
+TEST_ARGS = -s --verbose --color=yes --cov=$(src) $(extra_test_args)
 TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports
 STYLE_CHECK = flake8
 SHOW_COV = PYTHONPATH=$(src) python3 -m pytest --cov=$(src) --cov-report term-missing
