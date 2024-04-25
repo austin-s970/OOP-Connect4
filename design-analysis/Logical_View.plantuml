@@ -24,6 +24,17 @@ class Turns {
   _increment_turn(): None
 }
 
+class BoardIterator {
+    -_x : int
+    -_y : int
+    -_board : list[list[Spot]]
+    -_width : int
+    -_height : int
+    +__init__(board: list[list[Spot]]) : None
+    +__iter__() : Iterator
+    +__next__() : tuple[int, int, Spot]
+}
+
 class Board {
   -rows: int
   -cols: int
@@ -92,6 +103,7 @@ Game -- Draw
 Game -- FullError
 Game -- MultiError
 
+Board -- BoardIterator
 Board -- Screen
 Board -- FullError
 

@@ -70,6 +70,7 @@ endif
 	$(PLANTUML) uml/Screen.plantuml
 	$(PLANTUML) uml/Piece.plantuml
 	$(PLANTUML) uml/Spot.plantuml
+	$(PLANTUML) uml/BoardIterator.plantuml
 	$(PLANTUML) uml/Board.plantuml
 	$(PLANTUML) uml/Color.plantuml
 	$(PLANTUML) uml/DrawMeta.plantuml
