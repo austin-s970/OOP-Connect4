@@ -281,6 +281,6 @@ class Board(Screen):
                             break
                     else:
                         return True
-                    if self._diagonal_win(player_number):
-                        return True
+        if self._diagonal_win(player_number):
+            return True
         return False

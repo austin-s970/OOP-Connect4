@@ -127,3 +127,61 @@ class TestBoard(unittest.TestCase):
         """
         self.board._window_height = test_int
         self.assertEqual(self.board.window_height, test_int)
+
+    def test_spot(self) -> None:
+        """
+        function to test the spot getter property
+        """
+        self.assertEqual(isinstance(self.board.spot, Spot), True)
+
+    @given(some.integers())
+    def test_rows_getter(self, test_int: int) -> None:
+        """
+        function to test the rows getter property
+        """
+        self.board._rows = test_int
+        self.assertEqual(self.board.rows, test_int)
+
+    @given(some.integers())
+    def test_cols_getter(self, test_int: int) -> None:
+        """
+        function to test the cols getter property
+        """
+        self.board._cols = test_int
+        self.assertEqual(self.board.cols, test_int)
+
+    def test_reset(self) -> None:
+        """
+        function to test the reset method
+        """
+        self.board.reset()
+        for row in self.board._board:
+            for spot in row:
+                self.assertIs(spot._piece, None)
+
+    def test_get_player_at_spot(self) -> None:
+        """
+        function to test the get_player_at_spot method
+        """
+        self.board._board[0][0].add_piece(1)
+        self.assertEqual(self.board.get_player_at_spot(0,0), 1)
+        self.board.reset()
+        self.assertEqual(self.board.get_player_at_spot(0,0), 0)
+
+    def test_drop_piece(self) -> None:
+        """
+        function to test the drop_piece method
+        """
+        self.board.reset()
+        self.board.drop_piece(1, 2)
+        self.assertEqual(self.board.get_player_at_spot(1,0), 2)
+        try:
+            self.board.drop_piece(-1, 1)
+        except(ValueError):
+            pass
+        try:
+            self.board.reset()
+            for i in range(7):
+                self.board.drop_piece(0, 1)
+        except(FullError):
+            pass
