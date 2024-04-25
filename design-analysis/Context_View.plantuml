@@ -6,11 +6,11 @@ package "Connect 4 Game" {
     usecase Game
     usecase Board
     usecase Graphics
-    usecase Interface
+    usecase Turns
 
     [Game] ..> [Board]
     [Game] ..> [Graphics]
-    [Game] ..> [Interface]
+    [Game] ..> [Turns]
 
     [Graphics] ..> [Board]
 }
