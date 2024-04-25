@@ -67,6 +67,23 @@ class Spot:
             return self._piece.player_number
 
 
+class BoardIterator:
+    _board: list[list[Spot]]
+    x: int
+    y: int
+
+    @property
+    def width(self) -> int:
+        return len(self._board[0])
+
+    @property
+    def height(self) -> int:
+        return len(self._board)
+
+    def __init__(self, board: list[list[Spot]]) -> None:
+        pass
+
+
 class Board(Screen):
     """Class describing the game board."""
     _board: list[list[Spot]]
@@ -99,7 +116,7 @@ class Board(Screen):
     def drop_piece(self, x: int, player_number: int) -> None:
         if not (x >= 0 and x < self.window_width):
             raise ValueError
-        for y in range(self.window_height):
+        for y in range(self.height):
             if self._board[y][x].is_empty():
                 self._board[y][x].add_piece(player_number)
                 break
@@ -107,6 +124,9 @@ class Board(Screen):
             raise FullError
 
     def __str__(self) -> str:
+        """
+        String representation of self
+        """
         return_val: str = ''
         for y in range(self.height - 1, -1, -1):
             for x in range(self.width):
@@ -151,4 +171,5 @@ class Board(Screen):
                     else:
                         return True
                     # diagonal 1
+                    # diagonal 2
         return False
