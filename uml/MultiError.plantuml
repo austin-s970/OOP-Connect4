@@ -1,0 +1,6 @@
+@startuml
+scale 2
+title "MultiError Class Diagram"
+exception MultiError {
+}
+@enduml
