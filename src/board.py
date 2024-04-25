@@ -131,7 +131,7 @@ class BoardIterator:
         self._width = len(board[0])
         self._height = len(board)
 
-    def __iter__(self) -> Iterator:
+    def __iter__(self) -> Iterator[tuple[int, int, Spot]]:
         return self
 
     def __next__(self) -> tuple[int, int, Spot]:
@@ -160,7 +160,7 @@ class Board(Screen):
         self._spot = Spot()
         self._board = [[Spot() for i in range(cols)] for j in range(rows)]
 
-    def __iter__(self) -> Iterator:
+    def __iter__(self) -> Iterator[tuple[int, int, Spot]]:
         return BoardIterator(self._board)
 
     @property
