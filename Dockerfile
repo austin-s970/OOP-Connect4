@@ -5,6 +5,9 @@ RUN apt update \
   g++ gcc make sqlite3 time curl git nano dos2unix \
   net-tools iputils-ping iproute2 sudo gdb less 
 
+# Install Java and Graphviz for plantuml
+RUN apt install default-jre graphviz -y
+
 ARG USER=user
 ARG UID=1000
 ARG GID=1000

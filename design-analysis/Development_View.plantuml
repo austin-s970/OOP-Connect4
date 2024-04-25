@@ -1,21 +1,20 @@
 @startuml
+title Development View
 scale 2
-title "Development View"
 
-package "typing" {
-    [Optional]
+package "Connect 4 Game" {
+  [Game Module]
+  [Board Module]
+  [Interface Module]
+  [Graphics Module]
 }
 
-frame "Board Module" {
-    [Board Module] --> [typing] : uses
-    [Spot] --> [FullError] : uses
-    [Spot] --> [Piece] : uses
-    [Board] --> [Spot] : uses
-    [Game] --> [Board] : uses
-}
+[Game Module] ..> [Board Module] : uses
+[Game Module] ..> [Interface Module] : uses
+[Game Module] ..> [Graphics Module] : uses
 
-frame "Main Module" {
-    [Main Module] --> [Board Module] : uses
-}
+[Board Module] ..> [Interface Module] : uses
+
+[Graphics Module] ..> [Board Module] : uses
 
 @enduml

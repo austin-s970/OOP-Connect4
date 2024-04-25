@@ -1,9 +1,14 @@
 import unittest
+from unittest.mock import patch
 
-import main
+from main import main
 
 
 class TestMain(unittest.TestCase):
+    @patch('game.Game.game_loop')
+    def test_main(self, mock_loop):
+        main()
 
-    def test_main(self):
-        pass
+        # Check that the 'game_loop function
+        # was called once main was called.
+        mock_loop.assert_called_once()

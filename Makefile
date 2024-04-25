@@ -1,3 +1,4 @@
+PLANTUML = java -jar ~/plantuml.jar
 SHELL = /bin/bash
 
 src = src/
@@ -11,7 +12,7 @@ STYLE_CHECK = flake8
 
 
 .PHONY: all
-all: check-style check-type run-test clean docs
+all: check-style check-type run-test clean docs uml
 
 .PHONY: check-type
 check-type:
@@ -39,8 +40,23 @@ docs: $(documentation_dir)/index.html
 $(documentation_dir)/index.html: src/*.py
 	pdoc -o docs $^
 
-
-
+.PHONY: uml
+uml: docs
+# use shell command which to check if java is installed and is in the $PATH
+ifeq ($(shell which java), )
+	$(error "No java found in $(PATH). Install java to run plantuml")
+endif
+# use wildcard function to check if file exists
+ifeq ($(wildcard ~/plantuml.jar), )
+	@echo "Downloading plantuml.jar in home folder..."
+	curl -L -o ~/plantuml.jar https://sourceforge.net/projects/plantuml/files/plantuml.jar/download
+endif
+	$(PLANTUML) design-analysis/Process_View.plantuml
+	$(PLANTUML) design-analysis/Logical_View.plantuml
+	$(PLANTUML) design-analysis/Development_View.plantuml
+	$(PLANTUML) design-analysis/Physical_View.plantuml
+	$(PLANTUML) design-analysis/DesignAnalysis.plantuml
+	@echo "UML diagrams created and saved in uml folder"
 
 .PHONY: clean
 clean:

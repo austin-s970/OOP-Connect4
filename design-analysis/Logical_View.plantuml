@@ -1,31 +1,26 @@
 @startuml
+title Logical View
 scale 2
-title "Logical View"
 
-class FullError{
+class Game {
+  +game_loop(): None
+  +drop_piece(): None
+  +has_won(): boolean
+  +switch_player(): None
 }
 
-class Piece{
-    +__init__(player_number : int) : None
-    +_player_number : int
+class Board {
+  +rows: int
+  +cols: int
+  +spot: tuple[int, int]
 }
 
-class Spot{
-    +__init__() : None
-    +_piece : Optional[Piece]
+class Spot {
+  +occupant: int
+  +isEmpty(): boolean
 }
 
-class Board{
-    +__init__(width : int, height : int) : None
-    +_board : list[list[Spot]]
-}
-
-class Game{
-}
-
-Spot --> FullError : uses
-Spot --> Piece : uses
-Board --> Spot : uses
-Game --> Board : uses
+Game -- Board
+Board -- Spot
 
 @enduml
