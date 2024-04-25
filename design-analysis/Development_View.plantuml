@@ -5,12 +5,12 @@ scale 2
 package "Connect 4 Game" {
   [Game Module]
   [Board Module]
-  [Interface Module]
+  [Turns Module]
   [Graphics Module]
 }
 
 [Game Module] ..> [Board Module] : uses
-[Game Module] ..> [Interface Module] : uses
+[Game Module] ..> [Turns Module] : uses
 [Game Module] ..> [Graphics Module] : uses
 
 [Graphics Module] ..> [Board Module] : uses

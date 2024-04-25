@@ -8,37 +8,19 @@ node "Computer" {
             component "Pygame Library"
         }
         component "Application" {
-            skinparam ComponentBackgroundColor Aqua
             component "Game" {
                 note right: Handles the game loop
             }
             component "Board" {
                 note right: Manages the state of the game board
             }
-            component "Interface" {
-                note right: Manages user interactions
+            component "Turns" {
+                note right: Manages the turns between players
             }
             component "Graphics" {
                 note right: Represents the game in graphical form
             }
         }
     }
-}
-
-skinparam componentStyle uml2
-skinparam rectangle {
-    BackgroundColor PaleGreen
-    BorderColor Black
-    Shadowing true
-}
-skinparam node {
-    BackgroundColor Grey
-    BorderColor Black
-    Shadowing true
-}
-skinparam artifact {
-    BackgroundColor CornflowerBlue
-    BorderColor Black
-    Shadowing true
 }
 @enduml
