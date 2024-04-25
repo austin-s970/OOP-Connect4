@@ -1,7 +1,7 @@
 """Module Containing Game Board and Piece classes."""
+from typing import Optional, Iterator
 
 import pygame
-from typing import Optional
 
 
 class FullError(Exception):
@@ -122,6 +122,34 @@ class Spot:
             return self._piece.player_number
 
 
+class BoardIterator:
+    _x: int = 0
+    _y: int = 0
+
+    _board: list[list[Spot]]
+    _width: int
+    _height: int
+
+    def __init__(self, board: list[list[Spot]]) -> None:
+        self._board = board
+        self._width = len(board[0])
+        self._height = len(board)
+
+    def __iter__(self) -> Iterator[tuple[int, int, Spot]]:
+        return self
+
+    def __next__(self) -> tuple[int, int, Spot]:
+        if self._x >= self._width:
+            self._x = 0
+            self._y += 1
+        if self._y >= self._height:
+            raise StopIteration
+        return_val: tuple[int, int, Spot] = (self._y, self._x,
+                                             self._board[self._y][self._x])
+        self._x += 1
+        return return_val
+
+
 class Board(Screen):
     """Class describing the game board."""
     _board: list[list[Spot]]
@@ -135,6 +163,9 @@ class Board(Screen):
         super().__init__(rows, cols)
         self._spot = Spot()
         self._board = [[Spot() for i in range(cols)] for j in range(rows)]
+
+    def __iter__(self) -> Iterator[tuple[int, int, Spot]]:
+        return BoardIterator(self._board)
 
     @property
     def spot(self) -> Spot:
@@ -209,7 +240,7 @@ class Board(Screen):
     def drop_piece(self, x: int, player_number: int) -> None:
         if not (x >= 0 and x < self.window_width):
             raise ValueError
-        for y in range(self.window_height):
+        for y in range(self.height):
             if self._board[y][x].is_empty():
                 self._board[y][x].add_piece(player_number)
                 break
@@ -217,6 +248,9 @@ class Board(Screen):
             raise FullError
 
     def __str__(self) -> str:
+        """
+        String representation of self
+        """
         return_val: str = ''
         for y in range(self.height - 1, -1, -1):
             for x in range(self.width):
