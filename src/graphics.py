@@ -1,5 +1,5 @@
 """
-Module to manage the graphics.
+nnnnModule to manage the graphics.
 """
 
 import pygame
@@ -222,11 +222,11 @@ class Draw(metaclass=DrawMeta):
 
             occupant = spot.player_number()
 
-            center = (int(c * self.square_size +
-                          self.square_size / 2),
+            center = (int(c * self.screen.square_size +
+                          self.screen.square_size / 2),
                       int(draw_height *
-                          self.square_size +
-                          self.square_size / 2))
+                          self.screen.square_size +
+                          self.screen.square_size / 2))
             if occupant == 1:
                 self.draw_circle(red, center)
             elif occupant == 2:
