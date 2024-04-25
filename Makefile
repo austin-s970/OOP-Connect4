@@ -86,3 +86,7 @@ clean:
 	rm -rf `find . -type d -name .mypy_cache` # remove all mypy cache
 	rm -rf `find . -type d -name .hypothesis` # remove all hypothesis cache
 	rm -rf `find . -type d -name .coverage` # remove all coverage cache
+
+.PHONY: run
+run:
+	$(src)/main.py 2>/dev/null
