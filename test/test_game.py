@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from hypothesis import given, strategies, settings
+from hypothesis import given, strategies
 
 from game import Game
 from graphics import MultiError
@@ -68,5 +68,26 @@ class TestGame(unittest.TestCase):
             font.render.assert_called_with(expected_message, 1, expected_color)
             Screen().window.blit.assert_called()
 
-    def test_handle_mouse_motion(self) -> None:
-        pass
+    @given(xpos=strategies.integers(min_value=0, max_value=1000),
+           square_size=strategies.integers(min_value=1, max_value=100),
+           player_turn=strategies.integers(min_value=1, max_value=2))
+    def test_handle_mouse_motion(self, xpos: int, square_size: int,
+                                 player_turn: int) -> None:
+        with (patch('game.Turns') as Turns, patch('game.Board'),
+              patch('game.Screen'),
+              patch('game.Color') as Color, patch('game.Draw') as Draw,
+              patch('game.pygame')):
+            Turns()._player_turn = player_turn
+            Draw().screen.square_size = square_size
+            expected_color: MagicMock() = Color().black
+            screen: MagicMock = MagicMock()
+            event_pos = [xpos]
+            game = Game()
+            game.handle_mouse_motion(screen, event_pos)
+            screen.fill.assert_called_with(expected_color)
+            if player_turn == 1:
+                expected_color = Color().red
+            elif player_turn == 2:
+                expected_color = Color().yellow
+            Draw().draw_circle.assert_called_once_with(
+                expected_color, (xpos, int(square_size / 2)))
