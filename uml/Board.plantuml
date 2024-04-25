@@ -2,12 +2,12 @@
 scale 2
 title "Board Class Diagram"
 class Board {
-    +_board : list[list[Spot]]
+    -_board : list[list[Spot]]
 
     +__init__(cols: int, rows: int) : None
-    +_rows : int
-    +_cols : int
-    +_spot : Spot
+    -_rows : int
+    -_cols : int
+    -_spot : Spot
 
     +spot() : Spot
     +rows() : int

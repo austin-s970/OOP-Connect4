@@ -1,0 +1,6 @@
+@startuml
+scale 2
+title "FullError Class Diagram"
+exception FullError {
+}
+@enduml
