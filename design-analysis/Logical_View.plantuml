@@ -56,6 +56,11 @@ class Piece {
   -player_number: int
 }
 
+metaclass DrawMeta {
+  -_instances: dict[Any, Any]
+  +__call__(cls: Any, *args: Any, **kwargs: Any): Any
+}
+
 class Draw {
   -screen: Screen
   -board: Board
@@ -93,6 +98,7 @@ Board -- FullError
 Piece -- Spot
 Piece -- Board
 
+Draw -- DrawMeta
 Draw -- Board
 Draw -- Screen
 Draw -- Color
