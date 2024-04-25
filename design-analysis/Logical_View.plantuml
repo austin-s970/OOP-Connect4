@@ -75,24 +75,27 @@ class Color {
   -black: tuple
 }
 
-' Relationships
+exception MultiError
+
+exception FullError
+
 Game -- Turns
 Game -- Board
 Game -- Screen
 Game -- Color
 Game -- Draw
+Game -- FullError
+Game -- MultiError
+
 Board -- Screen
+Board -- FullError
+
 Piece -- Spot
 Piece -- Board
+
 Draw -- Board
 Draw -- Screen
 Draw -- Color
 Draw -- Spot
-
-class MultiError
-class FullError
-
-Game -- MultiError
-Board -- FullError
 
 @enduml
