@@ -1,26 +1,119 @@
 @startuml
-title Logical View
-scale 2
+' Define classes with their methods and attributes
 
 class Game {
-  +game_loop(): None
-  +drop_piece(): None
-  +has_won(): boolean
-  +switch_player(): None
+  -turn: Turns
+  -board: Board
+  -screen: Screen
+  -color: Color
+  -draw: Draw
+  -draw2: Draw
+  _print_winner_message(player: int): None
+  _print_tie_message(): None
+  _print_replay_message(): None
+  _replay(event: pygame.event.EventType): bool
+  game_loop(): None
+  handle_mouse_motion(screen: pygame.Surface, event_pos: list[int]): None
+  handle_mouse_click()
+}
+
+class Turns {
+  -player_turn: int
+  -turn_count: int
+  _switch_player(): None
+  _increment_turn(): None
+}
+
+class BoardIterator {
+    -_x : int
+    -_y : int
+    -_board : list[list[Spot]]
+    -_width : int
+    -_height : int
+    +__init__(board: list[list[Spot]]) : None
+    +__iter__() : Iterator
+    +__next__() : tuple[int, int, Spot]
 }
 
 class Board {
-  +rows: int
-  +cols: int
-  +spot: tuple[int, int]
+  -rows: int
+  -cols: int
+  -board: Spot[][]
+  reset(): None
+  get_player_at_spot(x: int, y: int): int
+  drop_piece(x: int, player_number: int): None
+  is_player(x: int, y: int, player_number: int): bool
+  _diagonal_win(player_number: int): bool
+  has_won(player_number: int): bool
+}
+
+class Screen {
+  -square_size: int
+  -window_width: int
+  -window_height: int
+  -window_size: tuple[int, int]
+  -window: pygame.Surface
 }
 
 class Spot {
-  +occupant: int
-  +isEmpty(): boolean
+  -piece: Piece
+  is_empty(): bool
+  add_piece(player_number: int): None
+  is_player(player_number: int): bool
+  player_number(): int
 }
 
+class Piece {
+  -player_number: int
+}
+
+metaclass DrawMeta {
+  -_instances: dict[Any, Any]
+  +__call__(cls: Any, *args: Any, **kwargs: Any): Any
+}
+
+class Draw {
+  -screen: Screen
+  -board: Board
+  -spot: Spot
+  -color: Color
+  -radius: int
+  draw_rectangle(draw_height: int, draw_width: int, color: tuple[int, int, int]): None
+  draw_circle(color: tuple[int, int, int], center: tuple[int, int]): None
+  gameboard(): None
+}
+
+class Color {
+  -red: tuple
+  -blue: tuple
+  -yellow: tuple
+  -lightblue: tuple
+  -black: tuple
+}
+
+exception MultiError
+
+exception FullError
+
+Game -- Turns
 Game -- Board
-Board -- Spot
+Game -- Screen
+Game -- Color
+Game -- Draw
+Game -- FullError
+Game -- MultiError
+
+Board -- BoardIterator
+Board -- Screen
+Board -- FullError
+
+Piece -- Spot
+Piece -- Board
+
+Draw -- DrawMeta
+Draw -- Board
+Draw -- Screen
+Draw -- Color
+Draw -- Spot
 
 @enduml

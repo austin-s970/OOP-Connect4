@@ -3,12 +3,12 @@ scale 2
 title "Game Class Diagram"
 class Game {
     +__init__() : None
-    +_turn : Turns
-    +_board : Board
-    +_screen : Screen
-    +_color : Color
-    +_draw : Draw
-    +_draw2 : Draw
+    -_turn : Turns
+    -_board : Board
+    -_screen : Screen
+    -_color : Color
+    -_draw : Draw
+    -_draw2 : Draw
 
     +turn() : Turns
     +board() : Board

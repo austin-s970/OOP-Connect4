@@ -3,11 +3,11 @@ scale 2
 title "Color Class Diagram"
 class Color {
     +__init__() : None
-    +_red: tuple[int, int, int]
-    +_blue: tuple[int, int, int]
-    +_yellow: tuple[int, int, int]
-    +_lightblue: tuple[int, int, int]
-    +_black: tuple[int, int, int]
+    -_red: tuple[int, int, int]
+    -_blue: tuple[int, int, int]
+    -_yellow: tuple[int, int, int]
+    -_lightblue: tuple[int, int, int]
+    -_black: tuple[int, int, int]
 
     +red() : tuple[int, int, int]
     +blue() : tuple[int, int, int]

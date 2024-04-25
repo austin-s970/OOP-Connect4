@@ -3,8 +3,8 @@ scale 2
 title "Turns Class Diagram"
 class Turns {
     +__init__() : None
-    +__player_turn: int
-    +__turn_count: int
+    -__player_turn: int
+    -__turn_count: int
 
     +_switch_player() : None
     +player_turn() : int

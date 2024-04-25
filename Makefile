@@ -63,11 +63,14 @@ endif
 	$(PLANTUML) design-analysis/Context_View.plantuml
 	@echo "Design Analysis (4+1 View) UML diagrams created and saved in design-analysis folder"
 
+	$(PLANTUML) uml/FullError.plantuml
+	$(PLANTUML) uml/MultiError.plantuml
 	$(PLANTUML) uml/Game.plantuml
 	$(PLANTUML) uml/Turns.plantuml
 	$(PLANTUML) uml/Screen.plantuml
 	$(PLANTUML) uml/Piece.plantuml
 	$(PLANTUML) uml/Spot.plantuml
+	$(PLANTUML) uml/BoardIterator.plantuml
 	$(PLANTUML) uml/Board.plantuml
 	$(PLANTUML) uml/Color.plantuml
 	$(PLANTUML) uml/DrawMeta.plantuml

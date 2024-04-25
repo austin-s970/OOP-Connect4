@@ -1,0 +1,15 @@
+@startuml
+scale 2
+title "BoardIterator Class Diagram"
+class BoardIterator {
+    -_x : int
+    -_y : int
+    -_board : list[list[Spot]]
+    -_width : int
+    -_height : int
+
+    +__init__(board: list[list[Spot]]) : None
+    +__iter__() : Iterator
+    +__next__() : tuple[int, int, Spot]
+}
+@enduml

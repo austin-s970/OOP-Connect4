@@ -2,7 +2,7 @@
 scale 2
 title "Spot Class Diagram"
 class Spot {
-    +_piece: Optional[Piece]
+    -_piece: Optional[Piece]
 
     +__init__() : None
     +piece() : Optional[Piece]
