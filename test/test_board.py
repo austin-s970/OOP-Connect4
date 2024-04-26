@@ -80,8 +80,7 @@ class TestSpot(unittest.TestCase):
 class TestBoard(unittest.TestCase):
     def setUp(self):
         self.board: Board = Board()
-    
-    # No deadline was a temporary change to satisfy CI/CD
+
     @settings(deadline=None)
     @given(x=strategies.integers(0, 6), y=strategies.integers(0, 5))
     def test_init_empty(self, x, y) -> None:
@@ -89,20 +88,6 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(len(self.board._board), 6)
         self.assertEqual(len(self.board._board[y]), 7)
         self.assertIsInstance(self.board._board[y][x], Spot)
-
-    # No deadline was a temporary change to satisfy CI/CD
-    # @settings(deadline=None)
-    # @given(width=strategies.integers(1, 100),
-    #        height=strategies.integers(1, 100),
-    #        x=strategies.integers(0, 100),
-    #        y=strategies.integers(0, 100))
-    # def test_init_args(self, width: int, height: int, x: int, y: int) -> None:
-    #     assume(x < width)
-    #     assume(y < height)
-    #     self.board = board.Board(width, height)
-    #     self.assertEqual(len(self.board._board), height)
-    #     self.assertEqual(len(self.board._board[y]), width)
-    #     self.assertIsInstance(self.board._board[y][x], board.Spot)
 
     @given(some.tuples(some.integers(), some.integers()))
     def test_window_size_getter(self, test_tuple: tuple[int, int]) -> None:

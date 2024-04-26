@@ -1,5 +1,5 @@
 """
-nnnnModule to manage the graphics.
+Module to manage the graphics.
 """
 
 import pygame

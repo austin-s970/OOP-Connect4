@@ -155,6 +155,13 @@ class Game():
 
     def handle_mouse_motion(self, screen: pygame.Surface,
                             event_pos: list[int]) -> None:
+        """
+        function to handle mouse motion. This function
+        manages the hovering piece that moves across
+        the top of the screen before the player plays their
+        turn.
+        """
+
         # If the mouse is moving, update the location of
         # the hovering piece
         color = self.color.black
@@ -177,6 +184,12 @@ class Game():
                                    int(self.draw.screen.square_size/2)))
 
     def handle_mouse_click(self, event_pos: list[float]) -> Optional[int]:
+        """
+        function to handle mouse clicking. This function handles
+        the response to the player selecting a column to
+        place their piece in.
+        """
+
         # If a player has placed a piece...
 
         # Clear the top of the screen

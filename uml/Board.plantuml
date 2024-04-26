@@ -17,7 +17,6 @@ class Board {
     +width() : int
     +height() : int
     +drop_piece(x: int, player_number: int) : None
-    +__str__() : str
     +is_player(x: int, y: int, player_number: int) : bool
     +_diagonal_win(player_number: int) : bool
     +has_won(player_number: int) : bool
