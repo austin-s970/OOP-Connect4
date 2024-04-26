@@ -68,6 +68,66 @@ class TestGame(unittest.TestCase):
             font.render.assert_called_with(expected_message, 1, expected_color)
             Screen().window.blit.assert_called()
 
+    @given(screen_width=strategies.integers(10, 1000),
+           square_size=strategies.integers(5, 200))
+    def test_print_replay_message(self, screen_width: int, square_size: int
+                                  ) -> None:
+        with (patch('game.Turns'), patch('game.Board'),
+              patch('game.Screen') as Screen,
+              patch('game.Color') as Color, patch('game.Draw'),
+              patch('game.pygame') as pygame):
+            Screen().window_width = screen_width
+            Screen().square_size = square_size
+            font = pygame.font.SysFont()
+            expected_background_color = Color().black
+            expected_text_color = Color().lightblue
+            game = Game()
+            game._print_replay_message()
+            pygame.draw.rect.assert_called_with(
+                Screen().window, expected_background_color,
+                (0, 0, screen_width, square_size))
+            font.render.assert_called_once()
+            positional, keyword = font.render.call_args
+            self.assertEqual(len(positional), 3)
+            self.assertIsInstance(positional[0], str)
+            self.assertEqual(positional[1], 1)
+            self.assertEqual(positional[2], expected_text_color)
+            self.assertEqual(keyword, {})
+            label = font.render()
+            Screen().window.blit.assert_called_with(label, (20, 5))
+
+    def test_replay(self) -> None:
+        with (patch('game.Turns'), patch('game.Board'),
+              patch('game.Screen'),
+              patch('game.Color'), patch('game.Draw'),
+              patch('game.pygame') as pygame, patch('game.sys') as sys):
+            print_replay_message = MagicMock()
+            event = MagicMock()
+            game = Game()
+            game._print_replay_message = print_replay_message
+            event_return_vals = [[MagicMock()] for i in range(20)]
+            event_return_vals[0][0].type = pygame.MOUSEBUTTONDOWN
+            event_return_vals[2][0].type = pygame.KEYDOWN
+            event_return_vals[3][0].type = pygame.KEYDOWN
+            event_return_vals[3][0].key = pygame.K_ESCAPE
+            event_return_vals[4][0].type = pygame.QUIT
+            event_return_vals[5][0].type = pygame.MOUSEBUTTONDOWN
+            pygame.event.get.side_effect = event_return_vals
+            self.assertTrue(game._replay(event))
+            print_replay_message.assert_called_once_with()
+            pygame.display.update.assert_called_once_with()
+            pygame.time.delay.assert_not_called()
+            event.assert_not_called()
+            self.assertFalse(game._replay(event))
+            pygame.quit.assert_not_called()
+            sys.exit.assert_not_called()
+            pygame.time.delay.assert_called
+            self.assertTrue(game._replay(event))
+            pygame.quit.assert_called_once_with()
+            sys.exit.assert_called_once_with()
+
+
+
     @given(xpos=strategies.integers(min_value=0, max_value=1000),
            square_size=strategies.integers(min_value=1, max_value=100),
            player_turn=strategies.integers(min_value=1, max_value=2))
@@ -93,9 +153,9 @@ class TestGame(unittest.TestCase):
                 expected_color, (xpos, int(square_size / 2)))
 
     def test_game_loop(self) -> None:
-        with (patch('game.Turns') as Turns, patch('game.Board') as Board,
+        with (patch('game.Turns'), patch('game.Board') as Board,
               patch('game.Screen'),
-              patch('game.Color') as Color, patch('game.Draw') as Draw,
+              patch('game.Color'), patch('game.Draw') as Draw,
               patch('game.pygame') as pygame):
             handle_mouse_click = MagicMock()
             replay = MagicMock()
