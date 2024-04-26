@@ -8,6 +8,12 @@ from board import Spot, Board
 
 class TestColor(unittest.TestCase):
     def setUp(self):
+        """
+        Setup function for 'TestColor'.
+        This function sets up an instance
+        of the 'Color' class to do tests
+        on.
+        """
         self.color = Color()
 
     def test_red_getter(self) -> None:
@@ -53,6 +59,11 @@ class TestColor(unittest.TestCase):
 
 class TestDraw(unittest.TestCase):
     def setUp(self):
+        """
+        Setup function for 'TestDraw'.
+        This function sets up a mock
+        board to do drawing tests on.
+        """
         # Mocking the Board
         self.window = None
         self.mock_board = MagicMock(spec=Board)
@@ -143,6 +154,9 @@ class TestDraw(unittest.TestCase):
                                                  self.draw.radius)
 
     def test_gameboard_drawing(self) -> None:
+        """
+        Test the gameboard drawing function.
+        """
         # Mock the 'draw_rectangle' function
         with (patch.object(self.draw, 'draw_rectangle') as mock_draw_rectangle,
               # Mock the 'draw_circle' function

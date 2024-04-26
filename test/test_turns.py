@@ -12,6 +12,12 @@ from turns import Turns
 
 class TestTurns(unittest.TestCase):
     def setUp(self):
+        """
+        Setup function for 'TestTurns'.
+        This function initializes
+        an instance of 'Turns' to do
+        tests on.
+        """
         self.turns: Turns = Turns()
 
     def test_constructor(self) -> None:

@@ -7,6 +7,11 @@ from main import main
 class TestMain(unittest.TestCase):
     @patch('game.Game.game_loop')
     def test_main(self, mock_loop):
+        """
+        Test that the game loop is
+        called once in the main
+        module.
+        """
         main()
 
         # Check that the 'game_loop function
