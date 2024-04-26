@@ -254,7 +254,7 @@ class Game():
                         self.board.reset()  # Reset the board
                         self.draw.gameboard()  # Redraw the empty board
 
-                        game_over = False  # Allow the gameloop to continue
+                        game_over = True  # Calling recursively, should end
 
                         # reset turn variables
                         self.turn._turn_count = 0

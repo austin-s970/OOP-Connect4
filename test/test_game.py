@@ -91,3 +91,35 @@ class TestGame(unittest.TestCase):
                 expected_color = Color().yellow
             Draw().draw_circle.assert_called_once_with(
                 expected_color, (xpos, int(square_size / 2)))
+
+    def test_game_loop(self) -> None:
+        with (patch('game.Turns') as Turns, patch('game.Board') as Board,
+              patch('game.Screen'),
+              patch('game.Color') as Color, patch('game.Draw') as Draw,
+              patch('game.pygame') as pygame):
+            handle_mouse_click = MagicMock()
+            replay = MagicMock()
+            replay.side_effect = [True, False]
+            handle_mouse_click.side_effect = [7, None, 2, None, 6, None, 6, 6]
+            pygame.time.get_ticks.side_effect = [2000, 4000, 4000, 4000, 4000]
+            event_side_effect = [[MagicMock()] for i in range(200)]
+            event_side_effect[0][0].type = pygame.MOUSEBUTTONDOWN
+            event_side_effect[1][0].type = pygame.MOUSEMOTION
+            event_side_effect[2][0].type = pygame.MOUSEBUTTONDOWN
+            event_side_effect[3][0].type = pygame.MOUSEBUTTONDOWN
+            event_side_effect[4][0].type = pygame.MOSUEBUTTONDOWN
+            event_side_effect[5][0].type = pygame.MOUSEBUTTONDOWN
+            pygame.event.get.side_effect = event_side_effect
+            game = Game()
+            game.handle_mouse_click = handle_mouse_click
+            game._replay = replay
+            game.game_loop()
+            pygame.init.assert_called()
+            Draw().gameboard.assert_called()
+            pygame.display.update.assert_called()
+            handle_mouse_click.assert_called()
+            replay.assert_called()
+            Board().reset.assert_called()
+            Draw().gameboard.assert_called()
+            pygame.time.Clock().tick.assert_called()
+            pygame.display.update.assert_called()
