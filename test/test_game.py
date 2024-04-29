@@ -126,8 +126,6 @@ class TestGame(unittest.TestCase):
             pygame.quit.assert_called_once_with()
             sys.exit.assert_called_once_with()
 
-
-
     @given(xpos=strategies.integers(min_value=0, max_value=1000),
            square_size=strategies.integers(min_value=1, max_value=100),
            player_turn=strategies.integers(min_value=1, max_value=2))
@@ -151,6 +149,48 @@ class TestGame(unittest.TestCase):
                 expected_color = Color().yellow
             Draw().draw_circle.assert_called_once_with(
                 expected_color, (xpos, int(square_size / 2)))
+
+    @given(xpos=strategies.floats(min_value=0, max_value=1000, allow_nan=False,
+                                  allow_infinity=False),
+           square_size=strategies.integers(1, 200))
+    def test_handle_mouse_click_noerror_noend(self, xpos: float,
+                                              square_size: int) -> None:
+        with (patch('game.Turns') as Turns, patch('game.Board') as Board,
+              patch('game.Screen') as Screen,
+              patch('game.Color') as Color, patch('game.Draw') as Draw,
+              patch('game.pygame') as pygame):
+            Screen().square_size = square_size
+            Board().has_won.return_value = False
+            Turns()._turn_count = 41
+            game: Game = Game()
+            event_pos = [xpos, 2.6]
+            self.assertIsNone(game.handle_mouse_click(event_pos))
+            expected_top_color: MagicMock() = Color().black
+            pygame.draw.rect.assert_called_once_with(
+                Screen().window, expected_top_color,
+                (0, 0, Screen().window_width, square_size))
+            correct_column: int = int(xpos / square_size)
+            Board().drop_piece.assert_called_once_with(correct_column,
+                                                       Turns()._player_turn)
+            Draw().gameboard.assert_called_once_with()
+            pygame.display.update.assert_called_once_with()
+            Turns()._increment_turn.assert_called_once_with()
+            Turns()._switch_player.assert_called_once_with()
+
+    @given(xpos=strategies.floats(min_value=0, max_value=1000, allow_nan=False,
+                                  allow_infinity=False))
+    def test_handle_mouse_click_winner(self, xpos: float) -> None:
+        with (patch('game.Turns') as Turns, patch('game.Board') as Board,
+              patch('game.Screen'),
+              patch('game.Color'), patch('game.Draw'),
+              patch('game.pygame') as pygame):
+            Board().has_won.return_value = True
+            game = Game()
+            game._print_winner_message = MagicMock()
+            self.assertEqual(game.handle_mouse_click([xpos, 5.4]),
+                             pygame.time.get_ticks())
+            game._print_winner_message.assert_called_once_with(
+                Turns()._player_turn)
 
     def test_game_loop(self) -> None:
         with (patch('game.Turns'), patch('game.Board') as Board,
