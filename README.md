@@ -19,3 +19,21 @@ we aim to master both the language and the OOP paradigm simultaneously. The Conn
 user interface allowing players to interact with the game board by strategically placing colored chips with the goal 
 of forming a sequence of four chips in a row. This project serves as a platform to explore the versatility of OOP in 
 creating diverse types of programs while honing our Python programming skills.
+
+### How To test
+In root directory of the project:  
+`make run-test`
+
+### How to run program
+In root directory of the project:  
+`make run`
+
+#### Showcase Grades
+| Grader | Grade |
+|:--------|:-------|
+| Self Grade | 95% |
+| Judge's Average Score | 40.5 : 90% |
+
+#### Self Grade Justification
+
+
